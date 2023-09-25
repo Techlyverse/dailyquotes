@@ -13,7 +13,7 @@ class QuoteScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            snapshot['quote'],
+            snapshot['quotes'],
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.w500,
@@ -23,7 +23,7 @@ class QuoteScreen extends StatelessWidget {
           Align(
             alignment: Alignment.bottomRight,
             child: Text(
-              "- ${snapshot['quote']}",
+              "- ${snapshot['author']}",
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
