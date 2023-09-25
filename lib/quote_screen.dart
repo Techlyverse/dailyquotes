@@ -1,17 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class QuoteScreen extends StatelessWidget {
-  const QuoteScreen({super.key});
+  const QuoteScreen({super.key, required this.snapshot});
+  final DocumentSnapshot snapshot;
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
+    return Padding(
       padding: EdgeInsets.all(30.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "If you can't be the sun be the star, Be the best of whatever you are",
+            snapshot['quote'],
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.w500,
@@ -21,7 +23,7 @@ class QuoteScreen extends StatelessWidget {
           Align(
             alignment: Alignment.bottomRight,
             child: Text(
-              "- Author Name",
+              "- ${snapshot['quote']}",
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,

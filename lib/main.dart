@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
         textTheme: GoogleFonts.quicksandTextTheme()
       ),
-      home: const HomeScreen(),
+      home: const HomeScreen()
     );
   }
 }
