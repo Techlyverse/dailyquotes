@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
               } else if (snapshot.data != null &&
                   snapshot.data!.docs.isNotEmpty) {
                 return PageView.builder(
-                    itemCount: 10,
+                    itemCount: snapshot.data?.docs.length,
                     scrollDirection: Axis.vertical,
                     itemBuilder: (_, index) {
                       return QuoteScreen(snapshot: snapshot.data!.docs[index]);
@@ -35,6 +35,7 @@ class HomeScreen extends StatelessWidget {
                 return Center(child: Text("No data found"));
               }
             }),
+       // floatingActionButton:,
       ),
     );
   }
