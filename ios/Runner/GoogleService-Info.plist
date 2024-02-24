@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.dailyquotes.dailyquotes</string>
+	<string>com.techlyverse.quotes</string>
 	<key>PROJECT_ID</key>
 	<string>dailyquotes-01</string>
 	<key>STORAGE_BUCKET</key>

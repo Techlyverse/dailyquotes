@@ -3,11 +3,21 @@ import "package:font_awesome_flutter/font_awesome_flutter.dart";
 import "package:google_fonts/google_fonts.dart";
 
 class SettingScreen extends StatefulWidget {
+  const SettingScreen({super.key});
+
   @override
   State<SettingScreen> createState() => SettingScreen_state();
 }
 
+
+
 class SettingScreen_state extends State<SettingScreen> {
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,56 +35,56 @@ class SettingScreen_state extends State<SettingScreen> {
           padding: const EdgeInsets.only(left: 11, right: 11, top: 20),
           child: ListTile(
               tileColor: Colors.deepPurple,
-              leading: Icon(Icons.link),
+              leading: const Icon(Icons.link),
               title: Text('More by us',
                   style:
                       TextStyle(fontFamily: GoogleFonts.openSans().fontFamily)),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(11))),
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 11, right: 11),
           child: ListTile(
               tileColor: Colors.deepPurple,
-              leading: Icon(Icons.thumb_up),
+              leading: const Icon(Icons.thumb_up),
               title: Text('Leave us a Review',
                   style:
                       TextStyle(fontFamily: GoogleFonts.openSans().fontFamily)),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(11))),
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 11, right: 11),
           child: ListTile(
               tileColor: Colors.deepPurple,
-              leading: Icon(Icons.feedback),
+              leading: const Icon(Icons.feedback),
               title: Text('Vote on next features',
                   style:
                       TextStyle(fontFamily: GoogleFonts.openSans().fontFamily)),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(11))),
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 11, right: 11),
           child: ListTile(
               tileColor: Colors.deepPurple,
-              leading: Icon(Icons.help),
+              leading: const Icon(Icons.help),
               title: Text('Help',
                   style:
                       TextStyle(fontFamily: GoogleFonts.openSans().fontFamily)),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(11))),
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
         Padding(
@@ -92,7 +102,7 @@ class SettingScreen_state extends State<SettingScreen> {
           padding: const EdgeInsets.only(left: 11, right: 11, top: 18),
           child: ListTile(
               tileColor: Colors.deepPurple,
-              leading: FaIcon(FontAwesomeIcons.instagram),
+              leading: const FaIcon(FontAwesomeIcons.instagram),
               title: Text(
                 'Instagram',
                 style: TextStyle(fontFamily: GoogleFonts.openSans().fontFamily),
@@ -100,21 +110,21 @@ class SettingScreen_state extends State<SettingScreen> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(11))),
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 11, right: 11),
           child: ListTile(
               tileColor: Colors.deepPurple,
-              leading: Icon(Icons.facebook),
+              leading: const Icon(Icons.facebook),
               title: Text('Facebook',
                   style:
                       TextStyle(fontFamily: GoogleFonts.openSans().fontFamily)),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(11))),
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
         Padding(
@@ -132,21 +142,21 @@ class SettingScreen_state extends State<SettingScreen> {
           padding: const EdgeInsets.only(left: 11, right: 11, top: 18),
           child: ListTile(
               tileColor: Colors.deepPurple,
-              leading: Icon(Icons.privacy_tip),
+              leading: const Icon(Icons.privacy_tip),
               title: Text('Privacy Policy',
                   style:
                       TextStyle(fontFamily: GoogleFonts.openSans().fontFamily)),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(11))),
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 11, right: 11),
           child: ListTile(
               tileColor: Colors.deepPurple,
-              leading: Icon(Icons.gavel),
+              leading: const Icon(Icons.gavel),
               title: Text('Terms & Conditions',
                   style:
                       TextStyle(fontFamily: GoogleFonts.openSans().fontFamily)),

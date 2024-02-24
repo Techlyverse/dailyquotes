@@ -1,4 +1,4 @@
-package com.dailyquotes.dailyquotes
+package com.techlyverse.quotes
 
 import io.flutter.embedding.android.FlutterActivity
 

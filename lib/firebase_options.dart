@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -49,9 +46,19 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCjr4D3sA0fHZfrpCL6AVbnVuN153DnMSQ',
+    appId: '1:161568734385:web:f7fb167ba7f17962823690',
+    messagingSenderId: '161568734385',
+    projectId: 'dailyquotes-01',
+    authDomain: 'dailyquotes-01.firebaseapp.com',
+    storageBucket: 'dailyquotes-01.appspot.com',
+    measurementId: 'G-KLB6S0YT97',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyATz8PLm0ZWuc9ycy7cfU_wXaTdkWSBbX0',
-    appId: '1:161568734385:android:c1ff6d4a13828c1e823690',
+    appId: '1:161568734385:android:60339fe3d4309560823690',
     messagingSenderId: '161568734385',
     projectId: 'dailyquotes-01',
     storageBucket: 'dailyquotes-01.appspot.com',
@@ -59,10 +66,10 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCCkAG4P9LexgVq_5VjF9e1igGDcBNm4to',
-    appId: '1:161568734385:ios:c5ae860ea7eb66d4823690',
+    appId: '1:161568734385:ios:3a57036788decd0e823690',
     messagingSenderId: '161568734385',
     projectId: 'dailyquotes-01',
     storageBucket: 'dailyquotes-01.appspot.com',
-    iosBundleId: 'com.dailyquotes.dailyquotes',
+    iosBundleId: 'com.techlyverse.quotes',
   );
 }

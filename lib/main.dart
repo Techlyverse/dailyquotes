@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
+
+
+
 void main() {
   runApp(const MyApp());
 }
@@ -16,15 +20,20 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Quotes App',
+      //TODO: create theme file
       theme: ThemeData.dark(
         useMaterial3: true,
       ),
+
+      //TODO: use system theme mode
       home: MyHomePage(),
     );
   }
 }
 
+//TODO: Add keys and const to constructor
 class MyHomePage extends StatefulWidget {
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -49,6 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+
+                // TODO: fetch this data from firebase
                 child: Text(
                   'Be the change you wish to see in the world.',
                   style: TextStyle(
@@ -58,19 +69,21 @@ class _MyHomePageState extends State<MyHomePage> {
                       fontFamily: GoogleFonts.openSans().fontFamily),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               Padding(
-                padding: EdgeInsets.only(left: 200),
-                child: Text(" - Mahatma Gandhi",
-                    style: TextStyle(
-                        color: Colors.black, // Adjust text color for visibility
-                        fontSize: 20.0,
-                        fontFamily: GoogleFonts.openSans().fontFamily,
-                        fontWeight: FontWeight.w500)),
+                padding: const EdgeInsets.only(left: 200),
+                child: Text(
+                  " - Mahatma Gandhi",
+                  style: TextStyle(
+                      color: Colors.black, // Adjust text color for visibility
+                      fontSize: 20.0,
+                      fontFamily: GoogleFonts.openSans().fontFamily,
+                      fontWeight: FontWeight.w500),
+                ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 200,
               ),
               Row(
@@ -78,27 +91,25 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   IconButton(
                       onPressed: () {},
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.ios_share,
-                        color: Colors.black,
                       )),
-                  SizedBox(
+                  const SizedBox(
                     width: 30,
                   ),
                   IconButton(
                       onPressed: () {},
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.favorite,
-                        color: Colors.black,
                       ))
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Row(
                 children: [
-                  Container(
+                  SizedBox(
                     height: 40,
                     width: 200,
                     child: ElevatedButton.icon(
@@ -116,9 +127,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                 fontFamily: GoogleFonts.openSans().fontFamily),
                           ),
                         ),
-                        icon: Icon(Icons.category_outlined)),
+                        icon: const Icon(Icons.category_outlined)),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 200,
                   ),
                   Container(
@@ -134,10 +145,10 @@ class _MyHomePageState extends State<MyHomePage> {
                               MaterialPageRoute(
                                   builder: (context) => ThemeCard()));
                         },
-                        icon: Icon(Icons.format_paint,
+                        icon: const Icon(Icons.format_paint,
                             color: Colors.deepPurpleAccent)),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                   Container(
@@ -153,7 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               MaterialPageRoute(
                                   builder: (context) => SettingScreen()));
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.settings,
                           color: Colors.deepPurpleAccent,
                         )),
