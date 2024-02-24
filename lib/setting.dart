@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:font_awesome_flutter/font_awesome_flutter.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:url_launcher/url_launcher.dart";
 
 class SettingScreen extends StatefulWidget {
   @override
@@ -12,146 +13,184 @@ class SettingScreen_state extends State<SettingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'General Settings',
           style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              fontFamily: GoogleFonts.openSans().fontFamily),
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
         ),
       ),
       body: ListView(children: [
         Padding(
-          padding: const EdgeInsets.only(left: 11, right: 11, top: 20),
-          child: ListTile(
-              tileColor: Colors.deepPurple,
-              leading: Icon(Icons.link),
-              title: Text('More by us',
-                  style:
-                      TextStyle(fontFamily: GoogleFonts.openSans().fontFamily)),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(11))),
-        ),
-        SizedBox(
+            padding: const EdgeInsets.only(left: 11, right: 11, top: 20),
+            child: ListTile(
+                leading: const Icon(Icons.link),
+                title: const Text(
+                  'More by us',
+                ),
+                onTap: () async {
+                  const url = 'https://your-website.com';
+                  if (await canLaunch(url)) {
+                    await launch(url);
+                  } else {
+                    throw 'Could not launch $url';
+                  }
+                })),
+        const SizedBox(
           height: 8,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 11, right: 11),
           child: ListTile(
-              tileColor: Colors.deepPurple,
-              leading: Icon(Icons.thumb_up),
-              title: Text('Leave us a Review',
-                  style:
-                      TextStyle(fontFamily: GoogleFonts.openSans().fontFamily)),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(11))),
+              leading: const Icon(Icons.thumb_up),
+              title: const Text(
+                'Leave us a Review',
+              ),
+              onTap: () async {
+                const url = 'https://your-website.com';
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  throw 'Could not launch $url';
+                }
+              }),
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 11, right: 11),
           child: ListTile(
-              tileColor: Colors.deepPurple,
               leading: Icon(Icons.feedback),
-              title: Text('Vote on next features',
-                  style:
-                      TextStyle(fontFamily: GoogleFonts.openSans().fontFamily)),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(11))),
+              title: const Text(
+                'Vote on next features',
+              ),
+              onTap: () async {
+                const url = 'https://your-website.com';
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  throw 'Could not launch $url';
+                }
+              }),
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 11, right: 11),
           child: ListTile(
-              tileColor: Colors.deepPurple,
-              leading: Icon(Icons.help),
-              title: Text('Help',
-                  style:
-                      TextStyle(fontFamily: GoogleFonts.openSans().fontFamily)),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(11))),
+              leading: const Icon(Icons.help),
+              title: const Text(
+                'Help',
+              ),
+              onTap: () async {
+                const url = 'https://your-website.com';
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  throw 'Could not launch $url';
+                }
+              }),
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 15),
+        const Padding(
+          padding: EdgeInsets.only(left: 15),
           child: Text(
             "Follow Us",
             style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontSize: 20,
-                fontFamily: GoogleFonts.openSans().fontFamily),
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontSize: 20,
+            ),
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 11, right: 11, top: 18),
           child: ListTile(
-              tileColor: Colors.deepPurple,
-              leading: FaIcon(FontAwesomeIcons.instagram),
-              title: Text(
+              leading: const FaIcon(FontAwesomeIcons.instagram),
+              title: const Text(
                 'Instagram',
-                style: TextStyle(fontFamily: GoogleFonts.openSans().fontFamily),
               ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(11))),
+              onTap: () async {
+                const url = 'https://your-website.com';
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  throw 'Could not launch $url';
+                }
+              }),
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 11, right: 11),
           child: ListTile(
-              tileColor: Colors.deepPurple,
-              leading: Icon(Icons.facebook),
-              title: Text('Facebook',
-                  style:
-                      TextStyle(fontFamily: GoogleFonts.openSans().fontFamily)),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(11))),
+              leading: const Icon(Icons.facebook),
+              title: const Text(
+                'Facebook',
+              ),
+              onTap: () async {
+                const url = 'https://your-website.com';
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  throw 'Could not launch $url';
+                }
+              }),
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 15),
+        const Padding(
+          padding: EdgeInsets.only(left: 15),
           child: Text(
             "Other",
             style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontSize: 20,
-                fontFamily: GoogleFonts.openSans().fontFamily),
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontSize: 20,
+            ),
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 11, right: 11, top: 18),
           child: ListTile(
-              tileColor: Colors.deepPurple,
-              leading: Icon(Icons.privacy_tip),
-              title: Text('Privacy Policy',
-                  style:
-                      TextStyle(fontFamily: GoogleFonts.openSans().fontFamily)),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(11))),
+              leading: const Icon(Icons.privacy_tip),
+              title: const Text(
+                'Privacy Policy',
+              ),
+              onTap: () async {
+                const url = 'https://your-website.com';
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  throw 'Could not launch $url';
+                }
+              }),
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 11, right: 11),
           child: ListTile(
-              tileColor: Colors.deepPurple,
-              leading: Icon(Icons.gavel),
-              title: Text('Terms & Conditions',
-                  style:
-                      TextStyle(fontFamily: GoogleFonts.openSans().fontFamily)),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(11))),
+              leading: const Icon(Icons.gavel),
+              title: const Text(
+                'Terms & Conditions',
+              ),
+              onTap: () async {
+                const url = 'https://your-website.com';
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  throw 'Could not launch $url';
+                }
+              }),
         ),
       ]),
     );
