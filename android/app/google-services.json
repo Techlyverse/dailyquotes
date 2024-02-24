@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:161568734385:android:c1ff6d4a13828c1e823690",
+        "mobilesdk_app_id": "1:161568734385:android:60339fe3d4309560823690",
         "android_client_info": {
-          "package_name": "com.dailyquotes.dailyquotes"
+          "package_name": "com.techlyverse.quotes"
         }
       },
       "oauth_client": [
