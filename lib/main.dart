@@ -1,14 +1,21 @@
 import 'package:dailyquotes/change_theme.dart';
 import 'package:dailyquotes/design.dart';
+import 'package:dailyquotes/firebase_options.dart';
 import 'package:dailyquotes/setting.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -32,8 +39,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final String author = " - Mahatma Gandhi";
-  final String quote = 'Be the change you wish to see in the world.';
+  String author = " ";
+  String quote = '';
   String backgroundImage = "assets/images/blue.jpg";
 
   bool liked = false;
@@ -41,6 +48,28 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       liked = !liked;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchData();
+  }
+
+  Future<void> _fetchData() async {
+    final quotesCollection = FirebaseFirestore.instance.collection('quotes');
+
+    final documentSnapshot = await quotesCollection.doc().get();
+
+    if (documentSnapshot.exists) {
+      final data = documentSnapshot.data();
+      setState(() {
+        quote = data!['quotes'];
+        author = data!['author'];
+      });
+    } else {
+      print("No document found!");
+    }
   }
 
   @override
@@ -63,12 +92,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                 child: Text(
-                  "$quote",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: GoogleFonts.openSans().fontFamily),
+                  quote,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               const SizedBox(
@@ -76,11 +105,10 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Padding(
                 padding: EdgeInsets.only(left: 200),
-                child: Text("$author",
-                    style: TextStyle(
-                        color: Colors.black, // Adjust text color for visibility
+                child: Text(author,
+                    style: const TextStyle(
+                        color: Colors.black,
                         fontSize: 20.0,
-                        fontFamily: GoogleFonts.openSans().fontFamily,
                         fontWeight: FontWeight.w500)),
               ),
               const SizedBox(
@@ -124,18 +152,16 @@ class _MyHomePageState extends State<MyHomePage> {
                               borderRadius: BorderRadius.circular(10.0)),
                           elevation: 5.0,
                         ),
-                        label: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        label: const Padding(
+                          padding: EdgeInsets.all(8.0),
                           child: Text(
                             "Inspirational",
-                            style: TextStyle(
-                                fontFamily: GoogleFonts.openSans().fontFamily),
                           ),
                         ),
                         icon: const Icon(Icons.category_outlined)),
                   ),
                   const SizedBox(
-                    width: 200,
+                    width: 20,
                   ),
                   Container(
                     height: 40,
@@ -153,6 +179,10 @@ class _MyHomePageState extends State<MyHomePage> {
                             setState(() {
                               backgroundImage = selectedImagePath;
                             });
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            prefs.setString(
+                                'backgroundImage', selectedImagePath);
                           }
                         },
                         icon: const Icon(Icons.format_paint,
