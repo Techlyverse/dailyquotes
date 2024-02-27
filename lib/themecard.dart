@@ -2,6 +2,9 @@ import 'package:dailyquotes/main.dart';
 import 'package:flutter/material.dart';
 
 class theme extends StatefulWidget {
+  final Function onDismiss;
+
+  const theme({Key? key, required this.onDismiss}) : super(key: key);
   @override
   State<theme> createState() => _themestate();
 }
@@ -66,17 +69,21 @@ class _themestate extends State<theme> {
         return GestureDetector(
           onTap: () {
            
-              selectedImagePath = images[index];
+
              if (selectedImagePath != null) {
-                            setState(() {
-                              
-                           });
+               setState(() {
+                 selectedImagePath = images[index];
+                 backgroundImage = selectedImagePath;
+                 print('Selected Image Path: $selectedImagePath');
+                 print('Background Image: $backgroundImage');
+               });
              }
-          
-            
-           
-            
-      Navigator.pop(context); 
+
+
+
+             Navigator.pop(context);
+             widget.onDismiss();
+             // Navigator.pop(context);
 
           },
           child: Card(

@@ -106,9 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Container(
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                      image: selectedImagePath.isEmpty
-                          ? AssetImage("assets/images/blue.jpg")
-                          : AssetImage(selectedImagePath),
+                      image:AssetImage(backgroundImage),
                       fit: BoxFit.cover,
                     )),
                   ),
@@ -199,13 +197,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                   borderRadius: BorderRadius.circular(11),
                                   color: Colors.black),
                               child: IconButton(
-                                  onPressed: () async {
-                                    showModalBottomSheet<void>(
+                                  onPressed: ()  {
+                                    showModalBottomSheet(
                                       context: context,
+
                                       builder: (BuildContext context) {
-                                        return theme();
+
+                                        return theme(onDismiss: updateUIAfterBottomSheetDismiss);
                                       },
                                     );
+                                    // setState(() {
+                                    //
+                                    // });
 
                                     // if (selectedImagePath != null) {
                                     //   setState(() {
@@ -251,5 +254,10 @@ class _MyHomePageState extends State<MyHomePage> {
             );
           }),
     ));
+  }
+  void updateUIAfterBottomSheetDismiss() {
+setState(() {
+
+});
   }
 }
