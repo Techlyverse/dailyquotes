@@ -22,6 +22,9 @@
 
 // String selectedImagePath = "";
 // String backgroundImage = "assets/images/blue.jpg";
+// String imagePath="";
+
+
 
 // class MyApp extends StatelessWidget {
 //   const MyApp({super.key});
@@ -54,20 +57,27 @@
 //       liked = !liked;
 //     });
 //   }
-
-//   List<String> quotes = [];
 //   @override
 //   void initState() {
 //     super.initState();
-//     _fetchData();
+//     _loadBackgroundImage();
 //   }
 
-// final StreamBuilder<QuerySnapshot> _userStream=FirebaseFirestore.instance.collection('quotes').snapshots();
+//   void _loadBackgroundImage() async {
+//     final prefs = await SharedPreferences.getInstance();
+
+//     setState(() {
+//       backgroundImage =   prefs.getString('myImage') ?? "assets/images/blue.jpg";
+//     });
+//   }
+
+ 
+
 
     
     
 
-//       // List<String> quotes = snapshot.data.docs.map((doc) => doc.data()['quote']).toList();
+// List<DocumentSnapshot> quotes = [];
 
 //   //   final quotesCollection = FirebaseFirestore.instance.collection('quotes');
 
@@ -104,24 +114,49 @@
 //           }
 //         }
 //       },
-//       child: 
+//       child: StreamBuilder<QuerySnapshot>(
+//           stream: FirebaseFirestore.instance.collection('quotes').snapshots(),
+//           builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//             if (snapshot.hasError) {
+//               return  Center(child: Text("An error occurred"));
+//             }
+
+//             if (snapshot.connectionState == ConnectionState.waiting) {
+//               return  Center(child: CircularProgressIndicator());
+//             }
+//         else {
+//         quotes = snapshot.data!.docs;
+//         //  quotes.clear();
+        
+//         //   var data = doc.data() as Map<String,dynamic>;
+//         //   quotes=data;
+//         //   if (data != null && data.containsKey('quotes')) {
+//         //     print(data);
+//         //   quotes.add(data['quote']);
+//         //   }
+//         //   else{
+//         //     print(data);
+//         //   }
+         
+        
       
-      
-      
-//       PageView.builder(
-//           itemCount: _texts.length,
+//       return PageView.builder(
+//           itemCount: quotes.length,
 //           itemBuilder: (context, index) {
+            
 //             return Center(
 //               child: Stack(
 //                 children: [
 //                   Container(
-//                     decoration:  BoxDecoration(
-//                         image: DecorationImage(
-//                       image:
+//                     decoration:BoxDecoration(
+//                        image: DecorationImage(
+//                        image:
 //                            AssetImage(backgroundImage),
+                      
                          
 //                       fit: BoxFit.cover,
-//                     )),
+//                     )
+//                     ),
 //                   ),
 //                   Center(
 //                     child: Column(
@@ -131,7 +166,7 @@
 //                           padding: const EdgeInsets.symmetric(
 //                               vertical: 20, horizontal: 10),
 //                           child: Text(
-//                             _texts[index],
+//                             quotes[index]['quotes'],
 //                             style: const TextStyle(
 //                               color: Colors.black,
 //                               fontSize: 24.0,
@@ -144,7 +179,7 @@
 //                         ),
 //                         Padding(
 //                           padding: const EdgeInsets.only(left: 200),
-//                           child: Text(author,
+//                           child: Text(quotes[index]['author'],
 //                               style: const TextStyle(
 //                                   color: Colors.black,
 //                                   fontSize: 20.0,
@@ -201,7 +236,7 @@
 //                                   icon: const Icon(Icons.category_outlined)),
 //                             ),
 //                             const SizedBox(
-//                               width: 20,
+//                               width: 40,
 //                             ),
 //                             Container(
 //                               height: 40,
@@ -215,12 +250,10 @@
 //                                     showModalBottomSheet<void>(
 //                                       context: context,
 //                                       builder: (BuildContext context) {
-//                                         return theme();
+//                                         return theme(onDismiss:updateUIAfterBottomSheetDismiss);
 //                                       },
 //                                     );
-//                                     setState(() {
-                                      
-//                                     });
+                                    
 //                                     // if (selectedImagePath != null) {
 //                                     //   setState(() {
 //                                     //     backgroundImage = selectedImagePath;
@@ -263,7 +296,16 @@
 //                 ],
 //               ),
 //             );
-//           }),
+//           }
+//           );
+
+//           }
+//     }  ),
 //     ));
+//   }
+//     void updateUIAfterBottomSheetDismiss() {
+// setState(() {
+
+// });
 //   }
 // }
