@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,10 +44,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String author = " ";
-  String quote = '';
+  
   int _currentPage = 0;
-  final List<String> _texts = ["Text 1", "Text 2", "Text 3"];
+  
 
   bool liked = false;
   void _toggleLike() {
@@ -73,6 +71,9 @@ class _MyHomePageState extends State<MyHomePage> {
           .map((colorString) => Color(int.parse(colorString)))
           .toList();
     });
+   
+    
+
   }
 
   List<DocumentSnapshot> quotes = [];
@@ -104,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   });
                 }
               } else if (details.primaryVelocity! < 0) {
-                if (_currentPage < _texts.length - 1) {
+                if (_currentPage < quotes.length - 1) {
                   setState(() {
                     _currentPage++;
                   });
@@ -192,7 +193,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       children: [
                                         IconButton(
                                             onPressed: () {
-                                              Share.share('$quote - $author');
+                                              Share.share(quotes[index]['quotes'] - quotes[index]['author']);
                                             },
                                             icon: const Icon(
                                               Icons.ios_share,

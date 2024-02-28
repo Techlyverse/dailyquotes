@@ -71,7 +71,7 @@ class _themestate extends State<theme> {
             if (gradients != null) {
               setState(() {
                 backgroundGradient = gradients[index];
-                saveGradientColors(gradients[index]);
+               
                 print(gradients[index]);
               });
             } else if (selectedImagePath != null) {
@@ -82,6 +82,7 @@ class _themestate extends State<theme> {
                 print('Background Image: $backgroundImage');
               });
             }
+            saveGradientColors(backgroundGradient);
             saveBackgroundImage(selectedImagePath);
             Navigator.pop(context);
             widget.onDismiss();
