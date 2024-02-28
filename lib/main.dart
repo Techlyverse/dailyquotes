@@ -22,6 +22,9 @@ void main() async {
 
 String selectedImagePath = "";
 String backgroundImage = "assets/images/blue.jpg";
+String imagePath="";
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -54,32 +57,46 @@ class _MyHomePageState extends State<MyHomePage> {
       liked = !liked;
     });
   }
-
-  List<String> quotes = [];
   @override
   void initState() {
     super.initState();
-    _fetchData();
+    _loadBackgroundImage();
   }
 
-  Future<void> _fetchData() async {
-    final quotesCollection = FirebaseFirestore.instance.collection('quotes');
+  void _loadBackgroundImage() async {
+    final prefs = await SharedPreferences.getInstance();
 
-    final documentSnapshot = await quotesCollection.get();
-
-    if (documentSnapshot.docs.isNotEmpty) {
-      for (var ds in documentSnapshot.docs) {
-        var data = ds.data();
-
-        print(data);
-      }
-    } else {
-      print("No document found!");
-    }
+    setState(() {
+      backgroundImage =   prefs.getString('myImage') ?? "assets/images/blue.jpg";
+    });
   }
+
+ 
+
+
+    
+    
+
+List<DocumentSnapshot> quotes = [];
+
+  //   final quotesCollection = FirebaseFirestore.instance.collection('quotes');
+
+  //   final documentSnapshot = await quotesCollection.get();
+
+  //   if (documentSnapshot.docs.isNotEmpty) {
+  //     for (var ds in documentSnapshot.docs) {
+  //       var data = ds.data();
+
+  //       print(data);
+  //     }
+  //   } else {
+  //     print("No document found!");
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
         body: GestureDetector(
       onHorizontalDragEnd: (details) {
@@ -97,18 +114,45 @@ class _MyHomePageState extends State<MyHomePage> {
           }
         }
       },
-      child: PageView.builder(
-          itemCount: _texts.length,
+      child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection('quotes').snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return  Center(child: Text("An error occurred"));
+            }
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return  Center(child: CircularProgressIndicator());
+            }
+        else {
+        quotes = snapshot.data!.docs;
+        //  quotes.clear();
+        
+        //   var data = doc.data() as Map<String,dynamic>;
+        //   quotes=data;
+        //   if (data != null && data.containsKey('quotes')) {
+        //     print(data);
+        //   quotes.add(data['quote']);
+        //   }
+        //   else{
+        //     print(data);
+        //   }
+         
+        
+      
+      return PageView.builder(
+          itemCount: quotes.length,
           itemBuilder: (context, index) {
+            
             return Center(
               child: Stack(
                 children: [
                   Container(
-                    decoration: BoxDecoration(
+                    decoration:  BoxDecoration(
                         image: DecorationImage(
-                      image: selectedImagePath.isEmpty
-                          ? AssetImage("assets/images/blue.jpg")
-                          : AssetImage(selectedImagePath),
+                      image:
+                           AssetImage(backgroundImage),
+                         
                       fit: BoxFit.cover,
                     )),
                   ),
@@ -120,7 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           padding: const EdgeInsets.symmetric(
                               vertical: 20, horizontal: 10),
                           child: Text(
-                            _texts[index],
+                            quotes[index]['quotes'],
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 24.0,
@@ -132,8 +176,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           height: 50,
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: 200),
-                          child: Text(author,
+                          padding: const EdgeInsets.only(left: 200),
+                          child: Text(quotes[index]['author'],
                               style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 20.0,
@@ -199,14 +243,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                   borderRadius: BorderRadius.circular(11),
                                   color: Colors.black),
                               child: IconButton(
-                                  onPressed: () async {
+                                  onPressed: ()  {
+
                                     showModalBottomSheet<void>(
                                       context: context,
                                       builder: (BuildContext context) {
-                                        return theme();
+                                        return theme(onDismiss:updateUIAfterBottomSheetDismiss);
                                       },
                                     );
-
+                                    
                                     // if (selectedImagePath != null) {
                                     //   setState(() {
                                     //     backgroundImage = selectedImagePath;
@@ -249,7 +294,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             );
-          }),
+          }
+          );
+
+          }
+    }  ),
     ));
+  }
+    void updateUIAfterBottomSheetDismiss() {
+setState(() {
+
+});
   }
 }

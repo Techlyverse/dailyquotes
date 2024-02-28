@@ -1,7 +1,11 @@
 import 'package:dailyquotes/main.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class theme extends StatefulWidget {
+   final Function onDismiss;
+
+  const theme({Key? key, required this.onDismiss}) : super(key: key);
   @override
   State<theme> createState() => _themestate();
 }
@@ -65,19 +69,17 @@ class _themestate extends State<theme> {
       itemBuilder: (ctx, index) {
         return GestureDetector(
           onTap: () {
-           
-              selectedImagePath = images[index];
              if (selectedImagePath != null) {
-                            setState(() {
-                              
-                           });
+            setState(() {
+              selectedImagePath = images[index];
+               backgroundImage = selectedImagePath;
+                 print('Selected Image Path: $selectedImagePath');
+                 print('Background Image: $backgroundImage');
+               });
              }
-          
-            
-           
-            
-      Navigator.pop(context); 
-
+             saveBackgroundImage(selectedImagePath);
+              Navigator.pop(context);
+             widget.onDismiss();
           },
           child: Card(
             elevation: 3,
@@ -97,3 +99,8 @@ class _themestate extends State<theme> {
     );
   }
 }
+Future<void> saveBackgroundImage(String imagePath) async {
+   final prefs =  await SharedPreferences.getInstance();
+
+    await prefs.setString('myImage', imagePath); 
+  }
