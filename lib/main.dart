@@ -1,12 +1,9 @@
-import 'package:dailyquotes/change_theme.dart';
 import 'package:dailyquotes/design.dart';
 import 'package:dailyquotes/firebase_options.dart';
 import 'package:dailyquotes/setting.dart';
 import 'package:dailyquotes/themecard.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -118,11 +115,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasError) {
-                    return Center(child: Text("An error occurred"));
+                    return const Center(child: Text("An error occurred"));
                   }
 
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   } else {
                     quotes = snapshot.data!.docs;
                     //  quotes.clear();
@@ -193,7 +190,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       children: [
                                         IconButton(
                                             onPressed: () {
-                                              Share.share(quotes[index]['quotes'] - quotes[index]['author']);
+                                              Share.share('${quotes[index]['quotes']} - ${quotes[index]['author']}');
                                             },
                                             icon: const Icon(
                                               Icons.ios_share,
