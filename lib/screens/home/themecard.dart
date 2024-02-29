@@ -1,4 +1,5 @@
 import 'package:dailyquotes/data/data.dart';
+import 'package:dailyquotes/preferences/preferences.dart';
 import 'package:flutter/material.dart';
 
 class theme extends StatefulWidget {
@@ -75,26 +76,11 @@ class _themestate extends State<theme> {
             itemBuilder: (ctx, index) {
               return GestureDetector(
                 onTap: () {
+                  saveThemeSelection();
                   backgroundImage = images?[index];
                   backgroundGradient = gradients?[index];
                   backgroundColor = colors?[index];
 
-                  // if (gradients != null) {
-                  //   setState(() {
-                  //     backgroundGradient = gradients[index];
-                  //
-                  //     print(gradients[index]);
-                  //   });
-                  // } else if (selectedImagePath != null) {
-                  //   setState(() {
-                  //     selectedImagePath = images[index];
-                  //     backgroundImage = selectedImagePath;
-                  //     print('Selected Image Path: $selectedImagePath');
-                  //     print('Background Image: $backgroundImage');
-                  //   });
-                  // }
-                  // saveGradientColors(backgroundGradient);
-                  // saveBackgroundImage(selectedImagePath);
 
                   Navigator.pop(context);
                   widget.onDismiss();
@@ -127,12 +113,5 @@ class _themestate extends State<theme> {
   }
 }
 
-// Future<void> saveBackgroundImage(String imagePath) async {
-//   final prefs = await SharedPreferences.getInstance();
-//   await prefs.setString('myImage', imagePath);
-// }
-//
-// Future<void> saveGradientColors(List<Color> gradientColors) async {
-//   final prefs = await SharedPreferences.getInstance();
-//   await prefs.setStringList('selectedGradientColors', gradientColors.map((color) => color.value.toString()).toList());
-// }
+
+
