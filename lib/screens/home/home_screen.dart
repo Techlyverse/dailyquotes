@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../data/data.dart';
 
-import 'themecard.dart';
+import '../settings/setting.dart';
+import 'background_sheet.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,8 +13,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<DocumentSnapshot> quotes = [];
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,98 +21,89 @@ class _HomeScreenState extends State<HomeScreen> {
         gradient: backgroundGradient,
         image: backgroundImage != null
             ? DecorationImage(
-                image: AssetImage(backgroundImage!), fit: BoxFit.cover)
+                image: AssetImage(backgroundImage!),
+                fit: BoxFit.cover,
+              )
             : null,
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: StreamBuilder<QuerySnapshot>(
-            stream:FirebaseFirestore.instance.collection('quotes').snapshots(),
-            builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (snapshot.hasError) {
-                    return const Center(child: Text("An error occurred"));
-                  }
-if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else {
-                    quotes = snapshot.data!.docs;
-              return Stack(
-                children:[
-                  Center(
-                    child:
-              PageView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount:quotes.length ,
-                itemBuilder:(context,index){
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+          child: Stack(
+            children: [
+              StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('quotes')
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const Center(child: Text("An error occurred"));
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else {
+                      final quotes = snapshot.data!.docs;
+                      return PageView.builder(
+                          scrollDirection: Axis.vertical,
+                          itemCount: quotes.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(12),
+                                  child: Text(
+                                    quotes[index]['quotes'],
+                                    style: const TextStyle(fontSize: 24.0),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    "- ${quotes[index]['author']}",
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic),
+                                  ),
+                                ),
+                              ],
+                            );
+                          });
+                    }
+                  }),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    // const SizedBox(height: 20),
-                    // Align(
-                    //   alignment: Alignment.topRight,
-                    //   child: IconButton(
-                    //     onPressed: () {},
-                    //     icon: const Icon(Icons.person_outline),
-                    //   ),
-                    // ),
-                    const Spacer(),
-                   Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Text(
-                        quotes[index]['quotes'],
-                        style: const TextStyle(fontSize: 26.0),
-                      ),
+                    IconButton(
+                      onPressed: () {
+                        showModalBottomSheet<void>(
+                          context: context,
+                          builder: (context) {
+                            return BackgroundSheet(
+                                onDismiss: updateUIAfterBottomSheetDismiss);
+                          },
+                        );
+                      },
+                      icon: const Icon(Icons.color_lens_outlined),
                     ),
-                    const Spacer(),
-                    Row(
-                      children: [
-                        // const SizedBox(
-                        //   height: 45,
-                        //   // child: ElevatedButton.icon(
-                        //   //     onPressed: () {},
-                        //   //     label: const Text(
-                        //   //       "Inspirational",
-                        //   //       style: TextStyle(),
-                        //   //     ),
-                        //   //     icon: const Icon(Icons.category_outlined)),
-                        // ),
-                        const Spacer(),
-                        IconButton(
-                            onPressed: () {
-                              showModalBottomSheet<void>(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return theme(
-                                      onDismiss: updateUIAfterBottomSheetDismiss);
-                                },
-                              );
-                            },
-                            icon: const Icon(Icons.format_paint)),
-                        // const SizedBox(width: 15),
-                        // IconButton(
-                        //   onPressed: () {
-                        //     Navigator.push(
-                        //         context,
-                        //         MaterialPageRoute(
-                        //             builder: (context) => SettingScreen()));
-                        //   },
-                        //   icon: const Icon(Icons.settings),
-                        // )
-                      ],
+                    const SizedBox(width: 15),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SettingScreen()));
+                      },
+                      icon: const Icon(Icons.settings_outlined),
                     )
                   ],
-                );
-                }
-               
-               )) ]
-              );
-          
-              }
-
-            }
+                ),
+              ),
+            ],
           ),
         ),
       ),

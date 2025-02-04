@@ -69,6 +69,7 @@ android {
     }
     buildTypes {
         release {
+            minifyEnabled true
             signingConfig signingConfigs.release
         }
     }
@@ -81,5 +82,4 @@ flutter {
 
 dependencies {
     implementation 'com.android.support:multidex:2.0.1'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.1.0"
 }
