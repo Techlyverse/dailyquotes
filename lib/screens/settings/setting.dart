@@ -1,198 +1,98 @@
 import "package:flutter/material.dart";
 import "package:font_awesome_flutter/font_awesome_flutter.dart";
-import "package:google_fonts/google_fonts.dart";
-import "package:url_launcher/url_launcher.dart";
+import "package:url_launcher/url_launcher_string.dart";
 
 class SettingScreen extends StatefulWidget {
+  const SettingScreen({super.key});
+
   @override
-  State<SettingScreen> createState() => SettingScreen_state();
+  State<SettingScreen> createState() => _SettingScreenState();
 }
 
-class SettingScreen_state extends State<SettingScreen> {
+class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'General Settings',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
+      appBar: AppBar(title: const Text('Settings')),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "General",
+              style: TextStyle(
+                color: Colors.deepOrange.shade700,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.info_outline),
+              title: const Text('Privacy policy'),
+              onTap: () async {
+                const url = 'https://your-website.com';
+                launchUrlString(url);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.share_outlined),
+              title: const Text('Share this app'),
+              onTap: () async {
+                const url = 'https://your-website.com';
+                launchUrlString(url);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.star_border),
+              title: const Text('Rate us on play store'),
+              onTap: () async {
+                const url = 'https://your-website.com';
+                launchUrlString(url);
+              },
+            ),
+            const SizedBox(height: 30),
+            Text(
+              "Follow Us",
+              style: TextStyle(
+                color: Colors.deepOrange.shade700,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            ListTile(
+              leading: Image.asset("assets/icons/instagram.png", height: 25),
+              title: const Text('Instagram'),
+              onTap: () async {
+                const url = 'https://your-website.com';
+                launchUrlString(url);
+              },
+            ),
+            ListTile(
+              leading: Image.asset("assets/icons/facebook.png", height: 25),
+              title: const Text('Facebook'),
+              onTap: () async {
+                const url = 'https://your-website.com';
+                launchUrlString(url);
+              },
+            ),
+            ListTile(
+              leading: Image.asset("assets/icons/linkedin.png", height: 30),
+              title: const Text('Linkedin'),
+              onTap: () async {
+                const url = 'https://your-website.com';
+                launchUrlString(url);
+              },
+            ),
+            ListTile(
+              leading: Image.asset("assets/icons/twitter.png", height: 30),
+              title: const Text('Twitter'),
+              onTap: () async {
+                const url = 'https://your-website.com';
+                launchUrlString(url);
+              },
+            ),
+          ],
         ),
       ),
-      body: ListView(children: [
-        Padding(
-            padding: const EdgeInsets.only(left: 11, right: 11, top: 20),
-            child: ListTile(
-                leading: const Icon(Icons.link),
-                title: const Text(
-                  'More by us',
-                ),
-                onTap: () async {
-                  const url = 'https://your-website.com';
-                  if (await canLaunch(url)) {
-                    await launch(url);
-                  } else {
-                    throw 'Could not launch $url';
-                  }
-                })),
-        const SizedBox(
-          height: 8,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 11, right: 11),
-          child: ListTile(
-              leading: const Icon(Icons.thumb_up),
-              title: const Text(
-                'Leave us a Review',
-              ),
-              onTap: () async {
-                const url = 'https://your-website.com';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  throw 'Could not launch $url';
-                }
-              }),
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 11, right: 11),
-          child: ListTile(
-              leading: Icon(Icons.feedback),
-              title: const Text(
-                'Vote on next features',
-              ),
-              onTap: () async {
-                const url = 'https://your-website.com';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  throw 'Could not launch $url';
-                }
-              }),
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 11, right: 11),
-          child: ListTile(
-              leading: const Icon(Icons.help),
-              title: const Text(
-                'Help',
-              ),
-              onTap: () async {
-                const url = 'https://your-website.com';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  throw 'Could not launch $url';
-                }
-              }),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        const Padding(
-          padding: EdgeInsets.only(left: 15),
-          child: Text(
-            "Follow Us",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-              fontSize: 20,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 11, right: 11, top: 18),
-          child: ListTile(
-              leading: const FaIcon(FontAwesomeIcons.instagram),
-              title: const Text(
-                'Instagram',
-              ),
-              onTap: () async {
-                const url = 'https://your-website.com';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  throw 'Could not launch $url';
-                }
-              }),
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 11, right: 11),
-          child: ListTile(
-              leading: const Icon(Icons.facebook),
-              title: const Text(
-                'Facebook',
-              ),
-              onTap: () async {
-                const url = 'https://your-website.com';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  throw 'Could not launch $url';
-                }
-              }),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        const Padding(
-          padding: EdgeInsets.only(left: 15),
-          child: Text(
-            "Other",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-              fontSize: 20,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 11, right: 11, top: 18),
-          child: ListTile(
-              leading: const Icon(Icons.privacy_tip),
-              title: const Text(
-                'Privacy Policy',
-              ),
-              onTap: () async {
-                const url = 'https://your-website.com';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  throw 'Could not launch $url';
-                }
-              }),
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 11, right: 11),
-          child: ListTile(
-              leading: const Icon(Icons.gavel),
-              title: const Text(
-                'Terms & Conditions',
-              ),
-              onTap: () async {
-                const url = 'https://your-website.com';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  throw 'Could not launch $url';
-                }
-              }),
-        ),
-      ]),
     );
   }
 }

@@ -1,31 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dailyquotes/provider/bg_provider.dart';
+
 import 'package:flutter/material.dart';
-import '../../data/data.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../settings/setting.dart';
 import 'background_sheet.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
 
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        gradient: backgroundGradient,
-        image: backgroundImage != null
-            ? DecorationImage(
-                image: AssetImage(backgroundImage!),
-                fit: BoxFit.cover,
-              )
-            : null,
-      ),
+      decoration: ref.watch(bgNotifierProvider),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Padding(
@@ -51,21 +40,42 @@ class _HomeScreenState extends State<HomeScreen> {
                             return Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Padding(
+                                Container(
                                   padding: const EdgeInsets.all(12),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white54,
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                      color: Colors.white70,
+                                      width: 2,
+                                    ),
+                                  ),
                                   child: Text(
                                     quotes[index]['quotes'],
-                                    style: const TextStyle(fontSize: 24.0),
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(fontSize: 22.0),
                                   ),
                                 ),
+                                const SizedBox(height: 20),
                                 Align(
                                   alignment: Alignment.centerRight,
-                                  child: Text(
-                                    "- ${quotes[index]['author']}",
-                                    style: TextStyle(
-                                        fontSize: 16.0,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Text(
+                                      "- ${quotes[index]['author']}",
+                                      style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontStyle: FontStyle.italic),
+                                        fontStyle: FontStyle.italic,
+                                        color: Colors.white,
+                                        background: Paint()
+                                          ..strokeWidth = 20
+                                          ..color = Colors.black38
+                                          ..strokeJoin = StrokeJoin.round
+                                          ..strokeCap = StrokeCap.round
+                                          ..style = PaintingStyle.stroke,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -82,10 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       onPressed: () {
                         showModalBottomSheet<void>(
                           context: context,
-                          builder: (context) {
-                            return BackgroundSheet(
-                                onDismiss: updateUIAfterBottomSheetDismiss);
-                          },
+                          builder: (context) => const BackgroundSheet(),
                         );
                       },
                       icon: const Icon(Icons.color_lens_outlined),
@@ -96,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SettingScreen()));
+                                builder: (context) => const SettingScreen()));
                       },
                       icon: const Icon(Icons.settings_outlined),
                     )
@@ -108,9 +115,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-  }
-
-  void updateUIAfterBottomSheetDismiss() {
-    setState(() {});
   }
 }

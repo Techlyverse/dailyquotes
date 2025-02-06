@@ -1,4 +1,3 @@
-import "package:dailyquotes/data/data.dart";
 import "package:shared_preferences/shared_preferences.dart";
 
 class Preferences {
@@ -22,12 +21,20 @@ class Preferences {
     return _prefs.getInt(_gradientIndex);
   }
 
+  static Future<bool> removeGradient() {
+    return _prefs.remove(_gradientIndex);
+  }
+
   static Future<bool> saveColorIndex(int index) async {
     return await _prefs.setInt(_colorIndex, index);
   }
 
   static int? getColorIndex() {
     return _prefs.getInt(_colorIndex);
+  }
+
+  static Future<bool> removeColor() {
+    return _prefs.remove(_colorIndex);
   }
 
   static Future<bool> saveImageUrl(String url) async {
@@ -37,18 +44,8 @@ class Preferences {
   static String? getImageUrl() {
     return _prefs.getString(_imageUrl);
   }
-}
 
-Future<void> saveThemeSelection() async {
-  final prefs = await SharedPreferences.getInstance();
-  if (backgroundImage != null) {
-    await prefs.setString('backgroundImage', backgroundImage!);
-  } else if (backgroundGradient != null) {
-    final List<String> gradientColorStrings = backgroundGradient!.colors
-        .map((color) => color.value.toString())
-        .toList();
-    await prefs.setStringList('backgroundGradient', gradientColorStrings);
-  } else if (backgroundColor != null) {
-    await prefs.setInt('backgroundColor', backgroundColor!.value);
+  static Future<bool> removeImageUrl() {
+    return _prefs.remove(_imageUrl);
   }
 }
