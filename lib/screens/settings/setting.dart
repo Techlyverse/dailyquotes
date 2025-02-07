@@ -1,6 +1,8 @@
 import "package:flutter/material.dart";
-import "package:font_awesome_flutter/font_awesome_flutter.dart";
+import "package:share_plus/share_plus.dart";
 import "package:url_launcher/url_launcher_string.dart";
+
+import "../../data/app_urls.dart";
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -30,24 +32,21 @@ class _SettingScreenState extends State<SettingScreen> {
               leading: const Icon(Icons.info_outline),
               title: const Text('Privacy policy'),
               onTap: () async {
-                const url = 'https://your-website.com';
-                launchUrlString(url);
+                launchUrlString(AppUrls.privacyPolicyUrl);
               },
             ),
             ListTile(
               leading: const Icon(Icons.share_outlined),
               title: const Text('Share this app'),
               onTap: () async {
-                const url = 'https://your-website.com';
-                launchUrlString(url);
+                await Share.share(AppUrls.playStoreUrl);
               },
             ),
             ListTile(
               leading: const Icon(Icons.star_border),
               title: const Text('Rate us on play store'),
               onTap: () async {
-                const url = 'https://your-website.com';
-                launchUrlString(url);
+                launchUrlString(AppUrls.playStoreUrl);
               },
             ),
             const SizedBox(height: 30),
@@ -62,32 +61,28 @@ class _SettingScreenState extends State<SettingScreen> {
               leading: Image.asset("assets/icons/instagram.png", height: 25),
               title: const Text('Instagram'),
               onTap: () async {
-                const url = 'https://your-website.com';
-                launchUrlString(url);
+                launchUrlString(AppUrls.instagramUrl);
               },
             ),
             ListTile(
               leading: Image.asset("assets/icons/facebook.png", height: 25),
               title: const Text('Facebook'),
               onTap: () async {
-                const url = 'https://your-website.com';
-                launchUrlString(url);
+                launchUrlString(AppUrls.facebookUrl);
               },
             ),
             ListTile(
               leading: Image.asset("assets/icons/linkedin.png", height: 30),
               title: const Text('Linkedin'),
               onTap: () async {
-                const url = 'https://your-website.com';
-                launchUrlString(url);
+                launchUrlString(AppUrls.linkedinUrl);
               },
             ),
             ListTile(
               leading: Image.asset("assets/icons/twitter.png", height: 30),
               title: const Text('Twitter'),
               onTap: () async {
-                const url = 'https://your-website.com';
-                launchUrlString(url);
+                launchUrlString(AppUrls.twitterUrl);
               },
             ),
           ],
