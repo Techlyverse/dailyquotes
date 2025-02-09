@@ -9,6 +9,7 @@ part 'bg_provider.g.dart';
 @riverpod
 class BgNotifier extends _$BgNotifier {
   @override
+
   BoxDecoration build() {
     final colorIndex = Preferences.getColorIndex();
     final gradientIndex = Preferences.getGradientIndex();

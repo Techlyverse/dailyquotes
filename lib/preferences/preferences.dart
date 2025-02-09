@@ -6,6 +6,7 @@ class Preferences {
   static const String _gradientIndex = "gradientIndex";
   static const String _colorIndex = "colorIndex";
   static const String _imageUrl = "imageUrl";
+  static const String _fontIndex = "fontIndex";
 
   static late final SharedPreferences _prefs;
 
@@ -47,5 +48,13 @@ class Preferences {
 
   static Future<bool> removeImageUrl() {
     return _prefs.remove(_imageUrl);
+  }
+
+  static Future<bool> saveFont(int index) async {
+    return await _prefs.setInt(_fontIndex, index);
+  }
+
+  static int? getFont(){
+    return _prefs.getInt(_fontIndex);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:dailyquotes/screens/home/tabs/color_tab.dart';
+import 'package:dailyquotes/screens/home/tabs/font_tab.dart';
 import 'package:dailyquotes/screens/home/tabs/gradient_tab.dart';
 import 'package:dailyquotes/screens/home/tabs/image_tab.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ class BackgroundSheet extends StatelessWidget {
               Tab(text: 'Images'),
               Tab(text: 'Gradients'),
               Tab(text: 'Colors'),
+              Tab(text: 'Fonts'),
             ],
           ),
           const Expanded(
@@ -40,6 +42,7 @@ class BackgroundSheet extends StatelessWidget {
                 ImageTab(),
                 GradientTab(),
                 ColorTab(),
+                FontTab(),
               ],
             ),
           ),

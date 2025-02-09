@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dailyquotes/data/fonts.dart';
 import 'package:dailyquotes/provider/bg_provider.dart';
+import 'package:dailyquotes/provider/font_provider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -54,7 +56,7 @@ class HomeScreen extends ConsumerWidget {
                                   child: Text(
                                     quotes[index]['quotes'],
                                     textAlign: TextAlign.center,
-                                    style: const TextStyle(fontSize: 22.0),
+                                    style: fonts[ref.read(fontNotifierProvider)],
                                   ),
                                 ),
                                 const SizedBox(height: 20),
