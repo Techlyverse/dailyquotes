@@ -23,7 +23,7 @@ class FontTab extends StatelessWidget {
         return Consumer(builder: (context, ref, child) {
           return GestureDetector(
             onTap: () {
-              ref.read(fontNotifierProvider.notifier).update(index);
+              ref.read(fontNotifierProvider.notifier).setFontIndex(index);
               Navigator.pop(context);
 
             },

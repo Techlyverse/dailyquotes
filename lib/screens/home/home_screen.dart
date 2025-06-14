@@ -14,6 +14,8 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // because we are getting AsyncValue<int> from fontNotifierProvider there fore we can't use it directly -MG
+    final fontAsync = ref.watch(fontNotifierProvider);
 
     return Container(
       decoration: ref.watch(bgNotifierProvider),
@@ -56,7 +58,12 @@ class HomeScreen extends ConsumerWidget {
                                   child: Text(
                                     quotes[index]['quotes'],
                                     textAlign: TextAlign.center,
-                                    style: fonts[ref.read(fontNotifierProvider)],
+                                    //style: fonts[ref.read(fontNotifierProvider)],
+                                    style: fontAsync.when(
+                                      data: (fontIndex) => fonts[fontIndex],
+                                      loading: () => const TextStyle(fontSize: 20),
+                                      error: (_, __) => const TextStyle(fontSize: 20, color: Colors.red),
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(height: 20),
