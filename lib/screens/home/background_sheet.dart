@@ -10,7 +10,8 @@ class BackgroundSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      // length was 3 before which was throwing exception -MG
+      length: 4,
       child: Column(
         children: [
           Padding(
