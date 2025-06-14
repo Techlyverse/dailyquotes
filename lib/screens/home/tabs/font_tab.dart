@@ -25,6 +25,7 @@ class FontTab extends StatelessWidget {
             onTap: () {
               ref.read(fontNotifierProvider.notifier).update(index);
               Navigator.pop(context);
+
             },
             child: Container(
               decoration: BoxDecoration(
