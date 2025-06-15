@@ -15,6 +15,7 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
+
     return Container(
       decoration: ref.watch(bgNotifierProvider),
       child: Scaffold(
@@ -56,7 +57,7 @@ class HomeScreen extends ConsumerWidget {
                                   child: Text(
                                     quotes[index]['quotes'],
                                     textAlign: TextAlign.center,
-                                    style: fonts[ref.read(fontNotifierProvider)],
+                                    style: fonts[ref.watch(fontNotifierProvider)],
                                   ),
                                 ),
                                 const SizedBox(height: 20),

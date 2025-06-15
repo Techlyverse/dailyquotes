@@ -6,7 +6,7 @@ part of 'font_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$fontNotifierHash() => r'40bb27296602a898e56949863cced034f1714909';
+String _$fontNotifierHash() => r'fe33a85f8b6b972fc66358d798fcfa2b51d31147';
 
 /// See also [FontNotifier].
 @ProviderFor(FontNotifier)

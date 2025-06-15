@@ -14,9 +14,13 @@ class BgNotifier extends _$BgNotifier {
     final colorIndex = Preferences.getColorIndex();
     final gradientIndex = Preferences.getGradientIndex();
     final imageUrl = Preferences.getImageUrl();
+    debugPrint('[BgNotifier] colorIndex = $colorIndex');
+    debugPrint('[BgNotifier] gradientIndex = $gradientIndex');
+    debugPrint('[BgNotifier] imageUrl = $imageUrl');
 
     if (colorIndex != null || gradientIndex != null || imageUrl != null) {
-      BoxDecoration(
+      // there was no return keyword before boxdecoration so it was returning default -MG
+      return BoxDecoration(
         color: colorIndex != null ? colors[colorIndex] : null,
         gradient: gradientIndex != null ? gradients[gradientIndex] : null,
         image: imageUrl != null
@@ -24,6 +28,7 @@ class BgNotifier extends _$BgNotifier {
             : null,
       );
     }
+
     return BoxDecoration(color: colors[0]);
   }
 
@@ -34,6 +39,7 @@ class BgNotifier extends _$BgNotifier {
       Preferences.removeGradient(),
       Preferences.removeImageUrl(),
     ]);
+    debugPrint('[BgNotifier] saved colorIndex = ${Preferences.getColorIndex()}');
   }
 
   Future<void> updateGradient(int index) async {
