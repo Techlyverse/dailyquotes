@@ -7,13 +7,11 @@ part 'font_provider.g.dart';
 @riverpod
 class FontNotifier extends _$FontNotifier {
   @override
-  //int build() => Preferences.getFont() ?? 0;
-  Future<int> build() async {
-    return await Preferences.getFont() ?? 0;
-  }
+  int build() => Preferences.getFont() ?? 0;
+
 
   Future<void> setFontIndex(int index) async {
-    state = AsyncValue.data(index);
+    state = index;
     await Preferences.saveFont(index);
     debugPrint('It is saving the font');
     debugPrint('[FontNotifier] saved fontIndex = ${Preferences.getFont()}');
