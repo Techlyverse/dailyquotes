@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return ProviderScope(
       child: MaterialApp(
         title: 'Quotes App',
-        home: const HomeScreen(),
+        home:  HomeScreen(),
         theme: appTheme,
       ),
     );
