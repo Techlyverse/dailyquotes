@@ -7,11 +7,13 @@ import '../settings/setting.dart';
 import 'background_sheet.dart';
 import 'package:dailyquotes/provider/font_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:dailyquotes/preferences/preferences.dart';
 
 
 class CategoryTab extends ConsumerWidget {
   final String category;
-  const CategoryTab({super.key, required this.category});
+  final String? langs = Preferences.getLanguages();
+   CategoryTab({super.key, required this.category});
 
 
   @override
@@ -20,7 +22,9 @@ class CategoryTab extends ConsumerWidget {
       children: [
         StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
-                .collection('quotes')
+                .collection('Facts')
+                .where('category', arrayContains: category)
+                .where('language', isEqualTo: langs)
                 .snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
@@ -49,7 +53,7 @@ class CategoryTab extends ConsumerWidget {
                               ),
                             ),
                             child: Text(
-                              quotes[index]['quotes'],
+                              quotes[index]['quote'],
                               textAlign: TextAlign.center,
                               style: fonts[ref.watch(fontNotifierProvider)],
                             ),
