@@ -9,12 +9,10 @@ import 'package:dailyquotes/provider/font_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dailyquotes/preferences/preferences.dart';
 
-
 class CategoryTab extends ConsumerWidget {
+  const CategoryTab({super.key, required this.category});
   final String category;
-  final String? langs = Preferences.getLanguages();
-   CategoryTab({super.key, required this.category});
-
+  static final List<String> languages = Preferences.getLanguages();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,7 +22,7 @@ class CategoryTab extends ConsumerWidget {
             stream: FirebaseFirestore.instance
                 .collection('Facts')
                 .where('category', arrayContains: category)
-                .where('language', isEqualTo: langs)
+                .where('language', isEqualTo: languages)
                 .snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
