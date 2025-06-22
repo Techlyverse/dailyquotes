@@ -29,6 +29,13 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
             ),
             ListTile(
+              leading: const Icon(Icons.language_outlined),
+              title: const Text('Language'),
+              onTap: () {
+
+              },
+            ),
+            ListTile(
               leading: const Icon(Icons.info_outline),
               title: const Text('Privacy policy'),
               onTap: () async {

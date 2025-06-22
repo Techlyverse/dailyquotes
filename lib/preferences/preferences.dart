@@ -7,11 +7,20 @@ class Preferences {
   static const String _colorIndex = "colorIndex";
   static const String _imageUrl = "imageUrl";
   static const String _fontIndex = "fontIndex";
+  static const String _languages = "languages";
 
   static late final SharedPreferences _prefs;
 
   static Future<void> initPreferences() async {
     _prefs = await SharedPreferences.getInstance();
+  }
+
+  static Future<bool> saveLanguages(List<String> languages) async {
+    return await _prefs.setStringList(_languages, languages);
+  }
+
+  static List<String> getLanguages() {
+    return _prefs.getStringList(_languages) ?? [];
   }
 
   static Future<bool> saveGradientIndex(int index) async {

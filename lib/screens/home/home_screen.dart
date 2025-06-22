@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dailyquotes/data/fonts.dart';
+import 'package:dailyquotes/preferences/preferences.dart';
 import 'package:dailyquotes/provider/bg_provider.dart';
 import 'package:dailyquotes/provider/font_provider.dart';
+import 'package:dailyquotes/screens/home/category_tab.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,7 +12,9 @@ import '../settings/setting.dart';
 import 'background_sheet.dart';
 
 class HomeScreen extends ConsumerWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+   final List<String> categories = ["Horror", "Comedy", "Romance", "Love"];
+  late List<String> languages = [];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,102 +25,39 @@ class HomeScreen extends ConsumerWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Stack(
-            children: [
-              StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection('quotes')
-                      .snapshots(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return const Center(child: Text("An error occurred"));
-                    }
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else {
-                      final quotes = snapshot.data!.docs;
-                      return PageView.builder(
-                          scrollDirection: Axis.vertical,
-                          itemCount: quotes.length,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(12),
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white54,
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(
-                                      color: Colors.white70,
-                                      width: 2,
-                                    ),
-                                  ),
-                                  child: Text(
-                                    quotes[index]['quotes'],
-                                    textAlign: TextAlign.center,
-                                    style: fonts[ref.watch(fontNotifierProvider)],
-                                  ),
-                                ),
-                                const SizedBox(height: 20),
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Text(
-                                      "- ${quotes[index]['author']}",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontStyle: FontStyle.italic,
-                                        color: Colors.white,
-                                        background: Paint()
-                                          ..strokeWidth = 20
-                                          ..color = Colors.black38
-                                          ..strokeJoin = StrokeJoin.round
-                                          ..strokeCap = StrokeCap.round
-                                          ..style = PaintingStyle.stroke,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            );
-                          });
-                    }
-                  }),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        showModalBottomSheet<void>(
-                          context: context,
-                          builder: (context) => const BackgroundSheet(),
-                        );
-                      },
-                      icon: const Icon(Icons.color_lens_outlined),
-                    ),
-                    const SizedBox(width: 15),
-                    IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SettingScreen()));
-                      },
-                      icon: const Icon(Icons.settings_outlined),
-                    )
-                  ],
-                ),
-              ),
-            ],
+          padding: const EdgeInsets.only(left : 20.0, top: 40, right: 20, bottom: 20 ),
+          child: DefaultTabController(
+            length: categories.length,
+            child:  Column(
+              children: [
+                TabBar(tabs: [
+                  Tab(text: 'Horror'),
+                  Tab(text: 'Comedy'),
+                  Tab(text: 'Romance'),
+                  Tab(text: 'Love'),
+                  // for (var i in categories){
+                  //   Tab(text: i),
+                  // }
+                ]),
+                Expanded(child: TabBarView(children: [
+                  CategoryTab( category: 'Horror',),
+                  CategoryTab(category: 'Comedy',),
+                  CategoryTab(category: 'Romance',),
+                  CategoryTab(category: 'Love',),
+                ])),
+
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  Future<void> getLanguage()async {
+    final langList = await FirebaseFirestore.instance.collection('languages').get();
+    for(var lang in langList.docs){
+      languages.add(lang['language']);
+    }
   }
 }
