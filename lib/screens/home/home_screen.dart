@@ -54,10 +54,39 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 
-  Future<void> getLanguage()async {
-    final langList = await FirebaseFirestore.instance.collection('languages').get();
-    for(var lang in langList.docs){
-      languages.add(lang['language']);
+  // Future<void> getLanguage()async {
+  //   final langList = await FirebaseFirestore.instance.collection('languages').get();
+  //   for(var lang in langList.docs){
+  //     languages.add(lang['language']);
+  //   }
+  // }
+
+  Future<List<String>> getLanguages() async {
+    try {
+      final DocumentSnapshot doc = await FirebaseFirestore.instance
+          .collection('app_info')
+          .doc('info')
+          .get();
+
+      if (doc.exists) {
+        final data = doc.data() as Map<String, dynamic>;
+        List<dynamic> langList = data['languages'];
+
+        // Convert dynamic list to List<String>
+         langList.map((lang) => lang.toString()).toList();
+        for(var lang in langList){
+               languages.add(lang);
+               print(languages);
+        }
+        return languages;
+      } else {
+        throw Exception("Document does not exist.");
+      }
+    } catch (e) {
+      print("Error getting languages: $e");
+          return [];
     }
   }
+
+
 }

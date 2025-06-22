@@ -1,3 +1,5 @@
+import "package:dailyquotes/preferences/preferences.dart";
+import "package:dailyquotes/screens/home/home_screen.dart";
 import "package:flutter/material.dart";
 import "package:share_plus/share_plus.dart";
 import "package:url_launcher/url_launcher_string.dart";
@@ -12,8 +14,17 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+   late List<String> languages = [] ;
+
+
   @override
   Widget build(BuildContext context) {
+    List<PopupMenuEntry<dynamic>> menuItems = languages
+        .map((language) => PopupMenuItem(
+      value: language,
+      child: Text(language),
+    ))
+        .toList();
     return Scaffold(
       appBar: AppBar(title: const Text('Settings')),
       body: SingleChildScrollView(
@@ -31,8 +42,22 @@ class _SettingScreenState extends State<SettingScreen> {
             ListTile(
               leading: const Icon(Icons.language_outlined),
               title: const Text('Language'),
-              onTap: () {
+              onTap: () async {
+                languages = await HomeScreen().getLanguages();
 
+                debugPrint("Language tapped");
+                debugPrint("${menuItems[0]}");
+                debugPrint("${languages.isNotEmpty}");
+                PopupMenuButton<dynamic>(
+                  itemBuilder: (BuildContext context) {
+
+                    return menuItems;
+                  },
+                  onSelected: (dynamic language) {
+                    // Handle the selected option
+                    Preferences.saveLanguages(language);
+                  },
+                );
               },
             ),
             ListTile(
