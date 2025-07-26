@@ -9,22 +9,30 @@ import 'package:dailyquotes/provider/font_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dailyquotes/preferences/preferences.dart';
 
+
+final likeProvider = StateProvider<bool>((ref) => false);
+
 class CategoryTab extends ConsumerWidget {
   const CategoryTab({super.key, required this.category});
   final String category;
-  static final List<String> languages = Preferences.getLanguages();
+  static final String language = Preferences.getLanguage();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    print("Languages passed: $language");
+    bool isLiked = ref.watch(likeProvider);
+
     return Stack(
       children: [
         StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
                 .collection('Facts')
-                .where('category', arrayContains: category)
-                .where('language', isEqualTo: languages)
+                .where('categories', arrayContains: category)
+                .where('language', isEqualTo: language)
                 .snapshots(),
             builder: (context, snapshot) {
+              //print("Selected language: $language");
+              //print("Selected category: $category");
               if (snapshot.hasError) {
                 return const Center(child: Text("An error occurred"));
               }
@@ -32,6 +40,7 @@ class CategoryTab extends ConsumerWidget {
                 return const Center(child: CircularProgressIndicator());
               } else {
                 final quotes = snapshot.data!.docs;
+                //print("Quotes: $quotes");
                 return PageView.builder(
                     scrollDirection: Axis.vertical,
                     itemCount: quotes.length,
@@ -39,11 +48,23 @@ class CategoryTab extends ConsumerWidget {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          // Align(
+                          //   alignment: Alignment.topRight,
+                          //   child: IconButton(
+                          //       onPressed:() {
+                          //         ref.read(likeProvider.notifier).state = !isLiked;
+                          //       },
+                          //       icon: Icon(
+                          //         isLiked ? Icons.favorite : Icons.favorite_border,
+                          //         color: isLiked ? Colors.red : Colors.transparent,
+                          //       )
+                          //   ),
+                          // ),
                           Container(
                             padding: const EdgeInsets.all(12),
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
-                              color: Colors.white54,
+                              color: Colors.white,
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
                                 color: Colors.white70,
@@ -82,33 +103,33 @@ class CategoryTab extends ConsumerWidget {
                     });
               }
             }),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                onPressed: () {
-                  showModalBottomSheet<void>(
-                    context: context,
-                    builder: (context) => const BackgroundSheet(),
-                  );
-                },
-                icon: const Icon(Icons.color_lens_outlined),
-              ),
-              const SizedBox(width: 15),
-              IconButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SettingScreen()));
-                },
-                icon: const Icon(Icons.settings_outlined),
-              )
-            ],
-          ),
-        ),
+        // Align(
+        //   alignment: Alignment.bottomRight,
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.end,
+        //     children: [
+        //       IconButton(
+        //         onPressed: () {
+        //           showModalBottomSheet<void>(
+        //             context: context,
+        //             builder: (context) => const BackgroundSheet(),
+        //           );
+        //         },
+        //         icon: const Icon(Icons.color_lens_outlined),
+        //       ),
+        //       const SizedBox(width: 15),
+        //       IconButton(
+        //         onPressed: () {
+        //           Navigator.push(
+        //               context,
+        //               MaterialPageRoute(
+        //                   builder: (context) => const SettingScreen()));
+        //         },
+        //         icon: const Icon(Icons.settings_outlined),
+        //       )
+        //     ],
+        //   ),
+        // ),
       ],
     );
   }

@@ -22,6 +22,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   List<String> categories = [];
   List<String> languages = [];
 
+
   @override
   void initState() {
     super.initState();
@@ -31,6 +32,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bg = ref.watch(bgNotifierProvider);
+    final textColor = getTextColor(bg);
+
     return Container(
       decoration: ref.watch(bgNotifierProvider),
       child: Scaffold(
@@ -39,33 +43,73 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           padding:
               const EdgeInsets.only(left: 20.0, top: 40, right: 20, bottom: 20),
           child: DefaultTabController(
-            length: categories.length,
+            length: 6,
             child: Column(
               children: [
-                TabBar(tabs: [
-                  Tab(text: 'Horror'),
-                  Tab(text: 'Comedy'),
-                  Tab(text: 'Romance'),
-                  Tab(text: 'Love'),
-                  // for (var i in categories){
-                  //   Tab(text: i),
-                  // }
-                ]),
-                Expanded(
+                Container(
+                  height: 60,
+                  child: TabBar(
+                    isScrollable: true,
+                      labelColor: textColor,
+                      labelStyle: fonts[ref.watch(fontNotifierProvider)],
+                      unselectedLabelColor: textColor,
+                      tabs: const [
+                    Tab(text: 'Dark',),
+                    Tab(text: 'Philosophical'),
+                    Tab(text: 'Comedy'),
+                    Tab(text: 'Motivational'),
+                    Tab(text: 'Horror'),
+                    Tab(text: 'Facts'),
+                    // for (var i in categories){
+                    //   Tab(text: i),
+                    // }
+                  ]),
+                ),
+                const Expanded(
                     child: TabBarView(children: [
                   CategoryTab(
-                    category: 'Horror',
+                    category: 'Dark',
+                  ),
+                  CategoryTab(
+                    category: 'Philosophical',
                   ),
                   CategoryTab(
                     category: 'Comedy',
                   ),
                   CategoryTab(
-                    category: 'Romance',
+                    category: 'Motivational',
                   ),
-                  CategoryTab(
-                    category: 'Love',
-                  ),
+                  CategoryTab(category: 'Horror'),
+                  CategoryTab(category: 'Facts'),
                 ])),
+
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          showModalBottomSheet<void>(
+                            context: context,
+                            builder: (context) => const BackgroundSheet(),
+                          );
+                        },
+                        icon: const Icon(Icons.color_lens_outlined),
+                      ),
+                      const SizedBox(width: 15),
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SettingScreen()));
+                        },
+                        icon: const Icon(Icons.settings_outlined),
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -80,6 +124,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   //     languages.add(lang['language']);
   //   }
   // }
+
+  Color getTextColor(BoxDecoration bg){
+    final bgColor = bg.color ?? Colors.transparent;
+    if(bg.gradient != null) {
+      final firstColor = bg.gradient!.colors.first;
+      return ThemeData.estimateBrightnessForColor(firstColor) == Brightness.dark ? Colors.white : Colors.black;
+    }
+    if(bg.image != null) return Colors.white;
+    return ThemeData.estimateBrightnessForColor(bgColor) == Brightness.dark ? Colors.white : Colors.black;
+  }
 
   Future<void> getAppInfo() async {
     try {
