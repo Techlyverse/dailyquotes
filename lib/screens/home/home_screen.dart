@@ -53,6 +53,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       labelColor: textColor,
                       labelStyle: fonts[ref.watch(fontNotifierProvider)],
                       unselectedLabelColor: textColor,
+                      //dividerColor: Colors.transparent,
                       tabs: const [
                     Tab(text: 'Dark',),
                     Tab(text: 'Philosophical'),

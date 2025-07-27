@@ -28,11 +28,11 @@ class CategoryTab extends ConsumerWidget {
             stream: FirebaseFirestore.instance
                 .collection('Facts')
                 .where('categories', arrayContains: category)
-                .where('language', isEqualTo: language)
+                //.where('language', isEqualTo: language)
                 .snapshots(),
             builder: (context, snapshot) {
-              //print("Selected language: $language");
-              //print("Selected category: $category");
+              print("Selected language: $language");
+              print("Selected category: $category");
               if (snapshot.hasError) {
                 return const Center(child: Text("An error occurred"));
               }
@@ -40,7 +40,7 @@ class CategoryTab extends ConsumerWidget {
                 return const Center(child: CircularProgressIndicator());
               } else {
                 final quotes = snapshot.data!.docs;
-                //print("Quotes: $quotes");
+                print("Quotes: $quotes");
                 return PageView.builder(
                     scrollDirection: Axis.vertical,
                     itemCount: quotes.length,
