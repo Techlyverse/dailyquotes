@@ -8,8 +8,10 @@ import 'package:dailyquotes/screens/home/category_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../provider/category_provider.dart';
 import '../settings/setting.dart';
 import 'background_sheet.dart';
+import 'category_selection.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -34,6 +36,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     final bg = ref.watch(bgNotifierProvider);
     final textColor = getTextColor(bg);
+    final selectedCategory = ref.watch(categoryNotifierProvider);
 
     return Container(
       decoration: ref.watch(bgNotifierProvider),
@@ -42,47 +45,46 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         body: Padding(
           padding:
               const EdgeInsets.only(left: 20.0, top: 40, right: 20, bottom: 20),
-          child: DefaultTabController(
-            length: 6,
             child: Column(
               children: [
-                Container(
-                  height: 60,
-                  child: TabBar(
-                    isScrollable: true,
-                      labelColor: textColor,
-                      labelStyle: fonts[ref.watch(fontNotifierProvider)],
-                      unselectedLabelColor: textColor,
-                      //dividerColor: Colors.transparent,
-                      tabs: const [
-                    Tab(text: 'Dark',),
-                    Tab(text: 'Philosophical'),
-                    Tab(text: 'Comedy'),
-                    Tab(text: 'Motivational'),
-                    Tab(text: 'Horror'),
-                    Tab(text: 'Facts'),
-                    // for (var i in categories){
-                    //   Tab(text: i),
-                    // }
-                  ]),
+                SizedBox(height: 5,),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      IconButton(
+                          onPressed: (){
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (context) => CategorySelection(),
+                            );
+                          },
+                          icon: Icon(Icons.label),
+                          tooltip: "Select Category",
+                      ),
+                      SizedBox(width: 5,),
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: Colors.white70,
+                            width: 2,
+                          ),
+                        ),
+                        child: Text(
+                          selectedCategory!.toUpperCase(),
+                          style: fonts[ref.watch(fontNotifierProvider)],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                const Expanded(
-                    child: TabBarView(children: [
-                  CategoryTab(
-                    category: 'Dark',
-                  ),
-                  CategoryTab(
-                    category: 'Philosophical',
-                  ),
-                  CategoryTab(
-                    category: 'Comedy',
-                  ),
-                  CategoryTab(
-                    category: 'Motivational',
-                  ),
-                  CategoryTab(category: 'Horror'),
-                  CategoryTab(category: 'Facts'),
-                ])),
+                Expanded(
+                    child: CategoryTab(category: selectedCategory,),),
 
                 Align(
                   alignment: Alignment.bottomRight,
@@ -115,8 +117,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
           ),
         ),
-      ),
     );
+
   }
 
   // Future<void> getLanguage()async {

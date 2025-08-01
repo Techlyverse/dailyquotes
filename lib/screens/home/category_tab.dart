@@ -1,4 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dailyquotes/models/quotes.dart';
+import 'package:dailyquotes/services/quote_data_processing.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ final likeProvider = StateProvider<bool>((ref) => false);
 
 class CategoryTab extends ConsumerWidget {
   const CategoryTab({super.key, required this.category});
-  final String category;
+  final String? category;
   static final String language = Preferences.getLanguage();
 
   @override
@@ -24,12 +25,8 @@ class CategoryTab extends ConsumerWidget {
 
     return Stack(
       children: [
-        StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection('Facts')
-                .where('categories', arrayContains: category)
-                //.where('language', isEqualTo: language)
-                .snapshots(),
+        FutureBuilder<List<Quote>>(
+            future: QuoteDataProcessing(),
             builder: (context, snapshot) {
               print("Selected language: $language");
               print("Selected category: $category");
@@ -38,8 +35,9 @@ class CategoryTab extends ConsumerWidget {
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
-              } else {
-                final quotes = snapshot.data!.docs;
+              }
+
+              final quotes = category != null ? snapshot.data!.where((quote) => quote.tags.contains(category)).toList() : snapshot.data!;
                 print("Quotes: $quotes");
                 return PageView.builder(
                     scrollDirection: Axis.vertical,
@@ -72,7 +70,7 @@ class CategoryTab extends ConsumerWidget {
                               ),
                             ),
                             child: Text(
-                              quotes[index]['quote'],
+                              quotes[index].quote,
                               textAlign: TextAlign.center,
                               style: fonts[ref.watch(fontNotifierProvider)],
                             ),
@@ -83,7 +81,7 @@ class CategoryTab extends ConsumerWidget {
                             child: Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: Text(
-                                "- ${quotes[index]['author']}",
+                                "- ${quotes[index].author}",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontStyle: FontStyle.italic,
@@ -102,7 +100,7 @@ class CategoryTab extends ConsumerWidget {
                       );
                     });
               }
-            }),
+            ),
         // Align(
         //   alignment: Alignment.bottomRight,
         //   child: Row(
