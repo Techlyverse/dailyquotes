@@ -1,7 +1,7 @@
 import 'package:dailyquotes/models/quotes.dart';
 import 'package:flutter/services.dart';
 
-Future<List<Quote>> QuoteDataProcessing() async {
+Future<List<Quote>> quoteDataProcessing() async {
   final dataFromFile = await rootBundle.loadString('assets/quotes/en_quotes.csv');
   final processedData = dataFromFile.split('\n').where( (oneLine) => oneLine.trim().isNotEmpty).toList();
   final dataLines = processedData.skip(1);

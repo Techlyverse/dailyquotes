@@ -76,7 +76,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           ),
                         ),
                         child: Text(
-                          selectedCategory!.toUpperCase(),
+                          selectedCategory != null ? selectedCategory.toUpperCase() : "No Category Selected",
                           style: fonts[ref.watch(fontNotifierProvider)],
                         ),
                       ),

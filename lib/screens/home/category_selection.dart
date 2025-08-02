@@ -14,8 +14,9 @@ class CategorySelection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return FutureBuilder(
-        future: QuoteDataProcessing(),
+        future: quoteDataProcessing(),
         builder: (context, snapshot) {
           if(snapshot.hasError){
             return const Center(child: Text("An error occurred"));
@@ -32,7 +33,7 @@ class CategorySelection extends ConsumerWidget {
           return Column(
             children: [
               const SizedBox(height: 30,),
-              Text("Select a category", style: fonts[ref.watch(fontNotifierProvider)],),
+              Text("Select a category", style: TextStyle(fontSize: 22, color: isDark? Colors.white : Colors.black),),
               const SizedBox(height: 30,),
               Expanded(
                 child: Padding(
@@ -55,7 +56,7 @@ class CategorySelection extends ConsumerWidget {
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
-                              color: isSelected? Colors.lightBlueAccent : Colors.white60,
+                              color: isSelected? Colors.lightBlueAccent : isDark? Colors.white: Colors.grey.shade200,
                             ),
                             child: Center(child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 4.0),

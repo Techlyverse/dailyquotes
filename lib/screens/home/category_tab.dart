@@ -26,7 +26,7 @@ class CategoryTab extends ConsumerWidget {
     return Stack(
       children: [
         FutureBuilder<List<Quote>>(
-            future: QuoteDataProcessing(),
+            future: quoteDataProcessing(),
             builder: (context, snapshot) {
               print("Selected language: $language");
               print("Selected category: $category");

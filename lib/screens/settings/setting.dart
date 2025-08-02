@@ -53,106 +53,143 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: (){
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back),
+          style: IconButton.styleFrom(
+            backgroundColor: isDark? const Color(0xFF1E1E1E) : const Color(0xFFFFFDF9),
+            foregroundColor: isDark? Colors.white : Colors.black,
+          ),
+        ),
+          title: const Text('Settings')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "General",
-              style: TextStyle(
-                color: Colors.deepOrange.shade700,
-                fontWeight: FontWeight.bold,
+            const SizedBox(height: 10,),
+            Padding(
+              padding: const EdgeInsets.only(left: 5),
+              child: Text(
+                "General",
+                style: TextStyle(
+                  color: Colors.deepOrange.shade700,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22
+                ),
               ),
             ),
-            ListTile(
-              leading: const Icon(Icons.info_outline),
-              title: const Text('Privacy policy'),
-              onTap: () async {
-                launchUrlString(AppUrls.privacyPolicyUrl);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.share_outlined),
-              title: const Text('Share this app'),
-              onTap: () async {
-                await Share.share(AppUrls.playStoreUrl);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.star_border),
-              title: const Text('Rate us on play store'),
-              onTap: () async {
-                launchUrlString(AppUrls.playStoreUrl);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.translate),
-              title: const Text('Language'),
-              trailing: PopupMenuButton<String>(
-                onSelected: (String value) {
-                  setState(() {
-                    _selectedLanguage = value;
-                    Preferences.saveLanguage(value);
-                  });
+            const SizedBox(height: 10,),
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.info_outline),
+                title: const Text('Privacy policy'),
+                onTap: () async {
+                  launchUrlString(AppUrls.privacyPolicyUrl);
                 },
-                itemBuilder: (BuildContext context) {
-                  return _languages.map((String lang) {
-                    return PopupMenuItem<String>(
-                      value: lang,
-                      child: Text(lang),
-                    );
-                  }).toList();
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.share_outlined),
+                title: const Text('Share this app'),
+                onTap: () async {
+                  await Share.share(AppUrls.playStoreUrl);
                 },
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade400),
-                    borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.star_border),
+                title: const Text('Rate us on play store'),
+                onTap: () async {
+                  launchUrlString(AppUrls.playStoreUrl);
+                },
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.translate),
+                title: const Text('Language'),
+                trailing: PopupMenuButton<String>(
+                  onSelected: (String value) {
+                    setState(() {
+                      _selectedLanguage = value;
+                      Preferences.saveLanguage(value);
+                    });
+                  },
+                  itemBuilder: (BuildContext context) {
+                    return _languages.map((String lang) {
+                      return PopupMenuItem<String>(
+                        value: lang,
+                        child: Text(lang),
+                      );
+                    }).toList();
+                  },
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.shade400),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(_selectedLanguage),
                   ),
-                  child: Text(_selectedLanguage),
                 ),
               ),
             ),
             const SizedBox(height: 30),
-            Text(
-              "Follow Us",
-              style: TextStyle(
-                color: Colors.deepOrange.shade700,
-                fontWeight: FontWeight.bold,
+            Padding(
+              padding: const EdgeInsets.only(left: 5),
+              child: Text(
+                "Follow Us",
+                style: TextStyle(
+                  color: Colors.deepOrange.shade700,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22
+                ),
               ),
             ),
-            ListTile(
-              leading: Image.asset("assets/icons/instagram.png", height: 25),
-              title: const Text('Instagram'),
-              onTap: () async {
-                launchUrlString(AppUrls.instagramUrl);
-              },
-            ),
-            ListTile(
-              leading: Image.asset("assets/icons/facebook.png", height: 25),
-              title: const Text('Facebook'),
-              onTap: () async {
-                launchUrlString(AppUrls.facebookUrl);
-              },
-            ),
-            ListTile(
-              leading: Image.asset("assets/icons/linkedin.png", height: 30),
-              title: const Text('Linkedin'),
-              onTap: () async {
-                launchUrlString(AppUrls.linkedinUrl);
-              },
-            ),
-            ListTile(
-              leading: Image.asset("assets/icons/twitter.png", height: 30),
-              title: const Text('Twitter'),
-              onTap: () async {
-                //launchUrlString(AppUrls.twitterUrl);
-              },
-            ),
+            const SizedBox(height: 10,),
+            Card(
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: Image.asset("assets/icons/instagram.png", height: 25),
+                    title: const Text('Instagram'),
+                    onTap: () async {
+                      launchUrlString(AppUrls.instagramUrl);
+                    },
+                  ),
+                  ListTile(
+                    leading: Image.asset("assets/icons/facebook.png", height: 25),
+                    title: const Text('Facebook'),
+                    onTap: () async {
+                      launchUrlString(AppUrls.facebookUrl);
+                    },
+                  ),
+                  ListTile(
+                    leading: Image.asset("assets/icons/linkedin.png", height: 30),
+                    title: const Text('Linkedin'),
+                    onTap: () async {
+                      launchUrlString(AppUrls.linkedinUrl);
+                    },
+                  ),
+                  ListTile(
+                    leading: Image.asset("assets/icons/twitter.png", height: 30),
+                    title: const Text('Twitter'),
+                    onTap: () async {
+                      //launchUrlString(AppUrls.twitterUrl);
+                    },
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),

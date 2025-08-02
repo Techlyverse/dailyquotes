@@ -33,7 +33,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Quotes App',
         home:  HomeScreen(),
-        theme: appTheme,
+        theme: lightTheme,
+        darkTheme: darkTheme,
       ),
     );
   }
