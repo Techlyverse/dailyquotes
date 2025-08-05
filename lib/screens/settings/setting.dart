@@ -1,5 +1,3 @@
-import "package:cloud_firestore/cloud_firestore.dart";
-import "package:dailyquotes/preferences/preferences.dart";
 import "package:flutter/material.dart";
 import "package:share_plus/share_plus.dart";
 import "package:url_launcher/url_launcher_string.dart";
@@ -14,8 +12,8 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  List<String> _languages = [];
-  String _selectedLanguage = Preferences.getLanguage();
+  //List<String> _languages = [];
+  //String _selectedLanguage = Preferences.getLanguage();
 
   @override
   void initState() {
@@ -24,32 +22,32 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   Future<void> loadLanguages() async {
-    final langs = await getLanguages();
+    //final langs = await getLanguages();
     setState(() {
-      _languages = langs;
+      //_languages = langs;
     });
   }
 
-  Future<List<String>> getLanguages() async {
-    try {
-      final DocumentSnapshot doc = await FirebaseFirestore.instance
-          .collection('app_info')
-          .doc('info')
-          .get();
-
-      if (doc.exists) {
-        final data = doc.data() as Map<String, dynamic>;
-        List<dynamic> languages = data['languages'];
-
-        return languages.map((lang) => lang.toString()).toList();
-      } else {
-        throw Exception("Document does not exist.");
-      }
-    } catch (e) {
-      print("Error getting languages: $e");
-      return [];
-    }
-  }
+  // Future<List<String>> getLanguages() async {
+  //   try {
+  //     final DocumentSnapshot doc = await FirebaseFirestore.instance
+  //         .collection('app_info')
+  //         .doc('info')
+  //         .get();
+  //
+  //     if (doc.exists) {
+  //       final data = doc.data() as Map<String, dynamic>;
+  //       List<dynamic> languages = data['languages'];
+  //
+  //       return languages.map((lang) => lang.toString()).toList();
+  //     } else {
+  //       throw Exception("Document does not exist.");
+  //     }
+  //   } catch (e) {
+  //     //print("Error getting languages: $e");
+  //     return [];
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -112,37 +110,37 @@ class _SettingScreenState extends State<SettingScreen> {
                 },
               ),
             ),
-            Card(
-              child: ListTile(
-                leading: const Icon(Icons.translate),
-                title: const Text('Language'),
-                trailing: PopupMenuButton<String>(
-                  onSelected: (String value) {
-                    setState(() {
-                      _selectedLanguage = value;
-                      Preferences.saveLanguage(value);
-                    });
-                  },
-                  itemBuilder: (BuildContext context) {
-                    return _languages.map((String lang) {
-                      return PopupMenuItem<String>(
-                        value: lang,
-                        child: Text(lang),
-                      );
-                    }).toList();
-                  },
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade400),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(_selectedLanguage),
-                  ),
-                ),
-              ),
-            ),
+            // Card(
+            //   child: ListTile(
+            //     leading: const Icon(Icons.translate),
+            //     title: const Text('Language'),
+            //     trailing: PopupMenuButton<String>(
+            //       onSelected: (String value) {
+            //         setState(() {
+            //           _selectedLanguage = value;
+            //           Preferences.saveLanguage(value);
+            //         });
+            //       },
+            //       itemBuilder: (BuildContext context) {
+            //         return _languages.map((String lang) {
+            //           return PopupMenuItem<String>(
+            //             value: lang,
+            //             child: Text(lang),
+            //           );
+            //         }).toList();
+            //       },
+            //       child: Container(
+            //         padding:
+            //             const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            //         decoration: BoxDecoration(
+            //           border: Border.all(color: Colors.grey.shade400),
+            //           borderRadius: BorderRadius.circular(8),
+            //         ),
+            //         child: Text(_selectedLanguage),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.only(left: 5),

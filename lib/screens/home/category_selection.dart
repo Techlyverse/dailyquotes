@@ -1,6 +1,4 @@
-import 'package:dailyquotes/screens/home/category_tab.dart';
 import 'package:dailyquotes/services/quote_data_processing.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -28,7 +26,7 @@ class CategorySelection extends ConsumerWidget {
           final quotes = snapshot.data!;
           final categories = Quote.getAllDistinctTags(quotes);
           final selectedCategory = ref.watch(categoryNotifierProvider);
-          print("Categories: ${categories.length}");
+          //print("Categories: ${categories.length}");
 
           return Column(
             children: [

@@ -1,11 +1,8 @@
 import 'package:dailyquotes/models/quotes.dart';
 import 'package:dailyquotes/services/quote_data_processing.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/fonts.dart';
-import '../settings/setting.dart';
-import 'background_sheet.dart';
 import 'package:dailyquotes/provider/font_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dailyquotes/preferences/preferences.dart';
@@ -20,16 +17,16 @@ class CategoryTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print("Languages passed: $language");
-    bool isLiked = ref.watch(likeProvider);
+    //print("Languages passed: $language");
+    //bool isLiked = ref.watch(likeProvider);
 
     return Stack(
       children: [
         FutureBuilder<List<Quote>>(
             future: quoteDataProcessing(),
             builder: (context, snapshot) {
-              print("Selected language: $language");
-              print("Selected category: $category");
+              //print("Selected language: $language");
+              //print("Selected category: $category");
               if (snapshot.hasError) {
                 return const Center(child: Text("An error occurred"));
               }
@@ -38,7 +35,7 @@ class CategoryTab extends ConsumerWidget {
               }
 
               final quotes = category != null ? snapshot.data!.where((quote) => quote.tags.contains(category)).toList() : snapshot.data!;
-                print("Quotes: $quotes");
+                //print("Quotes: $quotes");
                 return PageView.builder(
                     scrollDirection: Axis.vertical,
                     itemCount: quotes.length,

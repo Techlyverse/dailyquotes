@@ -1,8 +1,5 @@
-import 'package:dailyquotes/firebase_options.dart';
 import 'package:dailyquotes/preferences/preferences.dart';
-import 'package:dailyquotes/services/quote_data_processing.dart';
 import 'package:dailyquotes/theme/theme.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'screens/home/home_screen.dart';
@@ -32,7 +29,7 @@ class MyApp extends StatelessWidget {
     return ProviderScope(
       child: MaterialApp(
         title: 'Quotes App',
-        home:  HomeScreen(),
+        home:  const HomeScreen(),
         theme: lightTheme,
         darkTheme: darkTheme,
       ),

@@ -1,10 +1,8 @@
 import 'package:dailyquotes/data/fonts.dart';
-import 'package:dailyquotes/provider/bg_provider.dart';
 import 'package:dailyquotes/provider/font_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../data/gradients.dart';
 
 class FontTab extends StatelessWidget {
   const FontTab({super.key});

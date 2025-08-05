@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dailyquotes/data/fonts.dart';
-import 'package:dailyquotes/preferences/preferences.dart';
 import 'package:dailyquotes/provider/bg_provider.dart';
 import 'package:dailyquotes/provider/font_provider.dart';
 import 'package:dailyquotes/screens/home/category_tab.dart';
@@ -28,14 +26,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    getAppInfo();
+    //getAppInfo();
   }
 
 
   @override
   Widget build(BuildContext context) {
-    final bg = ref.watch(bgNotifierProvider);
-    final textColor = getTextColor(bg);
+    //final bg = ref.watch(bgNotifierProvider);
+    //final textColor = getTextColor(bg);
     final selectedCategory = ref.watch(categoryNotifierProvider);
 
     return Container(
@@ -47,7 +45,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               const EdgeInsets.only(left: 20.0, top: 40, right: 20, bottom: 20),
             child: Column(
               children: [
-                SizedBox(height: 5,),
+                const SizedBox(height: 5,),
                 Align(
                   alignment: Alignment.topLeft,
                   child: Row(
@@ -57,13 +55,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           onPressed: (){
                             showModalBottomSheet(
                                 context: context,
-                                builder: (context) => CategorySelection(),
+                                builder: (context) => const CategorySelection(),
                             );
                           },
-                          icon: Icon(Icons.label),
+                          icon: const Icon(Icons.label),
                           tooltip: "Select Category",
                       ),
-                      SizedBox(width: 5,),
+                      const SizedBox(width: 5,),
                       Container(
                         padding: const EdgeInsets.all(5),
                         alignment: Alignment.center,
@@ -138,22 +136,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return ThemeData.estimateBrightnessForColor(bgColor) == Brightness.dark ? Colors.white : Colors.black;
   }
 
-  Future<void> getAppInfo() async {
-    try {
-      final DocumentSnapshot doc = await FirebaseFirestore.instance
-          .collection('app_info')
-          .doc('info')
-          .get();
-
-      if (doc.exists) {
-        final data = doc.data() as Map<String, dynamic>;
-        languages = List.from(data['languages']);
-        categories = List.from(data['categories']);
-      } else {
-        throw Exception("Document does not exist.");
-      }
-    } catch (e) {
-      print("Error getting languages: $e");
-    }
-  }
+  // Future<void> getAppInfo() async {
+  //   try {
+  //     final DocumentSnapshot doc = await FirebaseFirestore.instance
+  //         .collection('app_info')
+  //         .doc('info')
+  //         .get();
+  //
+  //     if (doc.exists) {
+  //       final data = doc.data() as Map<String, dynamic>;
+  //       languages = List.from(data['languages']);
+  //       categories = List.from(data['categories']);
+  //     } else {
+  //       throw Exception("Document does not exist.");
+  //     }
+  //   } catch (e) {
+  //     //print("Error getting languages: $e");
+  //   }
+  // }
 }
