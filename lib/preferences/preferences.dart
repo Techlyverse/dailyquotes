@@ -9,6 +9,7 @@ class Preferences {
   static const String _fontIndex = "fontIndex";
   static const String _language = "language";
   static const String _languages = "languages";
+  static const String _selectedCategory = "selectedCategory";
 
   static late final SharedPreferences _prefs;
 
@@ -74,5 +75,13 @@ class Preferences {
 
   static int? getFont() {
     return _prefs.getInt(_fontIndex);
+  }
+
+  static Future<bool> saveCategory(String category) async{
+    return await _prefs.setString(_selectedCategory, category);
+  }
+
+  static String? getCategory(){
+    return _prefs.getString(_selectedCategory);
   }
 }
