@@ -13,7 +13,7 @@ void main() async {
   //   print('"${quote.quote}","${quote.author}","${quote.tags}"');
   // }
   // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-   await Preferences.initPreferences();
+  await Preferences.initPreferences();
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
     return ProviderScope(
       child: MaterialApp(
         title: 'Quotes App',
-        home:  const HomeScreen(),
+        home: const HomeScreen(),
         theme: lightTheme,
         darkTheme: darkTheme,
       ),

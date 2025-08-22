@@ -22,19 +22,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   List<String> categories = [];
   List<String> languages = [];
 
-
   @override
   void initState() {
     super.initState();
     //getAppInfo();
   }
 
-
   @override
   Widget build(BuildContext context) {
     //final bg = ref.watch(bgNotifierProvider);
     //final textColor = getTextColor(bg);
-    final selectedCategory = ref.watch(categoryNotifierProvider);
+    final selectedCat = ref.watch(categoryNotifierProvider);
+    final formatSelectedCat = (selectedCat != null && selectedCat.isNotEmpty)
+        ? selectedCat
+            .split("-")
+            .map((splittedWord) =>
+                "${splittedWord[0].toUpperCase()}${splittedWord.substring(1)}")
+            .join(" ")
+        : "No Category Selected";
 
     return Container(
       decoration: ref.watch(bgNotifierProvider),
@@ -43,80 +48,90 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         body: Padding(
           padding:
               const EdgeInsets.only(left: 20.0, top: 40, right: 20, bottom: 20),
-            child: Column(
-              children: [
-                const SizedBox(height: 5,),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      IconButton(
-                          onPressed: (){
-                            showModalBottomSheet(
-                                context: context,
-                                builder: (context) => const CategorySelection(),
-                            );
-                          },
-                          icon: const Icon(Icons.label),
-                          tooltip: "Select Category",
-                      ),
-                      const SizedBox(width: 5,),
-                      Container(
-                        padding: const EdgeInsets.all(5),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: Colors.white70,
-                            width: 2,
-                          ),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 5,
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) => const CategorySelection(),
+                        );
+                      },
+                      icon: const Icon(Icons.label),
+                      tooltip: "Select Category",
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.72,
+                      padding: const EdgeInsets.all(5),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(25),
+                        border: Border.all(
+                          color: Colors.white70,
+                          width: 2,
                         ),
-                        child: Text(
-                          selectedCategory != null ? selectedCategory.toUpperCase() : "No Category Selected",
-                          style: fonts[ref.watch(fontNotifierProvider)],
-                        ),
                       ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                    child: CategoryTab(category: selectedCategory,),),
-
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          showModalBottomSheet<void>(
-                            context: context,
-                            builder: (context) => const BackgroundSheet(),
-                          );
-                        },
-                        icon: const Icon(Icons.color_lens_outlined),
+                      child: Text(
+                        formatSelectedCat,
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        style: fonts[ref.watch(fontNotifierProvider)]
+                            .copyWith(fontWeight: FontWeight.bold),
                       ),
-                      const SizedBox(width: 15),
-                      IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SettingScreen()));
-                        },
-                        icon: const Icon(Icons.settings_outlined),
-                      )
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              Expanded(
+                child: CategoryTab(
+                  category: selectedCat,
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        showModalBottomSheet<void>(
+                          context: context,
+                          builder: (context) => const BackgroundSheet(),
+                        );
+                      },
+                      icon: const Icon(Icons.color_lens_outlined),
+                    ),
+                    const SizedBox(width: 15),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SettingScreen()));
+                      },
+                      icon: const Icon(Icons.settings_outlined),
+                    )
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
+      ),
     );
-
   }
 
   // Future<void> getLanguage()async {
@@ -126,14 +141,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   //   }
   // }
 
-  Color getTextColor(BoxDecoration bg){
+  Color getTextColor(BoxDecoration bg) {
     final bgColor = bg.color ?? Colors.transparent;
-    if(bg.gradient != null) {
+    if (bg.gradient != null) {
       final firstColor = bg.gradient!.colors.first;
-      return ThemeData.estimateBrightnessForColor(firstColor) == Brightness.dark ? Colors.white : Colors.black;
+      return ThemeData.estimateBrightnessForColor(firstColor) == Brightness.dark
+          ? Colors.white
+          : Colors.black;
     }
-    if(bg.image != null) return Colors.white;
-    return ThemeData.estimateBrightnessForColor(bgColor) == Brightness.dark ? Colors.white : Colors.black;
+    if (bg.image != null) return Colors.white;
+    return ThemeData.estimateBrightnessForColor(bgColor) == Brightness.dark
+        ? Colors.white
+        : Colors.black;
   }
 
   // Future<void> getAppInfo() async {

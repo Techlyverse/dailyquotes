@@ -54,35 +54,39 @@ class _SettingScreenState extends State<SettingScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: (){
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back),
-          style: IconButton.styleFrom(
-            backgroundColor: isDark? const Color(0xFF1E1E1E) : const Color(0xFFFFFDF9),
-            foregroundColor: isDark? Colors.white : Colors.black,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back),
+            style: IconButton.styleFrom(
+              backgroundColor:
+                  isDark ? const Color(0xFF1E1E1E) : const Color(0xFFFFFDF9),
+              foregroundColor: isDark ? Colors.white : Colors.black,
+            ),
           ),
-        ),
           title: const Text('Settings')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 5),
               child: Text(
                 "General",
                 style: TextStyle(
-                  color: Colors.deepOrange.shade700,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22
-                ),
+                    color: Colors.deepOrange.shade700,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22),
               ),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Card(
               child: ListTile(
                 leading: const Icon(Icons.info_outline),
@@ -147,39 +151,44 @@ class _SettingScreenState extends State<SettingScreen> {
               child: Text(
                 "Follow Us",
                 style: TextStyle(
-                  color: Colors.deepOrange.shade700,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22
-                ),
+                    color: Colors.deepOrange.shade700,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22),
               ),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Card(
               child: Column(
                 children: [
                   ListTile(
-                    leading: Image.asset("assets/icons/instagram.png", height: 25),
+                    leading:
+                        Image.asset("assets/icons/instagram.png", height: 25),
                     title: const Text('Instagram'),
                     onTap: () async {
                       launchUrlString(AppUrls.instagramUrl);
                     },
                   ),
                   ListTile(
-                    leading: Image.asset("assets/icons/facebook.png", height: 25),
+                    leading:
+                        Image.asset("assets/icons/facebook.png", height: 25),
                     title: const Text('Facebook'),
                     onTap: () async {
                       launchUrlString(AppUrls.facebookUrl);
                     },
                   ),
                   ListTile(
-                    leading: Image.asset("assets/icons/linkedin.png", height: 30),
+                    leading:
+                        Image.asset("assets/icons/linkedin.png", height: 30),
                     title: const Text('Linkedin'),
                     onTap: () async {
                       launchUrlString(AppUrls.linkedinUrl);
                     },
                   ),
                   ListTile(
-                    leading: Image.asset("assets/icons/twitter.png", height: 30),
+                    leading:
+                        Image.asset("assets/icons/twitter.png", height: 30),
                     title: const Text('Twitter'),
                     onTap: () async {
                       //launchUrlString(AppUrls.twitterUrl);
