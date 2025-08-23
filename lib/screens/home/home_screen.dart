@@ -45,37 +45,45 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               const EdgeInsets.only(left: 20.0, top: 40, right: 20, bottom: 20),
             child: Column(
               children: [
-                const SizedBox(height: 5,),
+                const SizedBox(height: 8,),
                 Align(
                   alignment: Alignment.topLeft,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      IconButton(
-                          onPressed: (){
-                            showModalBottomSheet(
-                                context: context,
-                                builder: (context) => const CategorySelection(),
-                            );
-                          },
-                          icon: const Icon(Icons.label),
-                          tooltip: "Select Category",
-                      ),
-                      const SizedBox(width: 5,),
-                      Container(
-                        padding: const EdgeInsets.all(5),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: Colors.white70,
-                            width: 2,
+                      // IconButton(
+                      //     onPressed: (){
+                      //       showModalBottomSheet(
+                      //           context: context,
+                      //           builder: (context) => const CategorySelection(),
+                      //       );
+                      //     },
+                      //     icon: const Icon(Icons.label),
+                      //     tooltip: "Select Category",
+                      // ),
+                      // const SizedBox(width: 5,),
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) => const CategorySelection(),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color: Colors.white70,
+                              width: 2,
+                            ),
                           ),
-                        ),
-                        child: Text(
-                          selectedCategory != null ? selectedCategory.toUpperCase() : "No Category Selected",
-                          style: fonts[ref.watch(fontNotifierProvider)],
+                          child: Text(
+                            selectedCategory != null ? selectedCategory.toUpperCase() : "No Category Selected",
+                            style: fonts[ref.watch(fontNotifierProvider)],
+                          ),
                         ),
                       ),
                     ],

@@ -36,6 +36,7 @@ final ThemeData darkTheme = ThemeData(
     primary: Color(0xFFFFC107),
     secondary: Color(0xFF90CAF9),
     surface: Color(0xFF1E1E1E),
+    surfaceContainerHighest: Color(0xFF545454),
     onPrimary: Colors.black,
     onSecondary: Colors.black,
     onSurface: Colors.white,
