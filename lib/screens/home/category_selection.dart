@@ -1,4 +1,5 @@
 import 'package:dailyquotes/services/quote_data_processing.dart';
+import 'package:dailyquotes/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -31,7 +32,20 @@ class CategorySelection extends ConsumerWidget {
           return Column(
             children: [
               const SizedBox(height: 30,),
-              Text("Select a category", style: TextStyle(fontSize: 22, color: isDark? Colors.white : Colors.black),),
+              Row(
+                children: [
+                  SizedBox(width: 20,),
+                  Text("Select a category", style: TextStyle(fontSize: 22, color: isDark? Colors.white : Colors.black),),
+                  Spacer(),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: const Icon(Icons.close),
+                  ),
+                  SizedBox(width: 10,),
+                ],
+              ),
               const SizedBox(height: 30,),
               Expanded(
                 child: Padding(
@@ -54,11 +68,11 @@ class CategorySelection extends ConsumerWidget {
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
-                              color: isSelected? Colors.lightBlueAccent : isDark? Colors.white: Colors.grey.shade200,
+                              color: isSelected? Colors.lightBlueAccent : isDark? darkTheme.colorScheme.surfaceContainerHighest: Colors.grey.shade200,
                             ),
                             child: Center(child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                              child: Text(category.toUpperCase(), style: fonts[ref.watch(fontNotifierProvider)], textAlign: TextAlign.center, softWrap: true, maxLines: 3,),
+                              child: Text(category.toUpperCase(), style: fonts[ref.watch(fontNotifierProvider)].copyWith(color: Theme.of(context).colorScheme.onSurface), textAlign: TextAlign.center, softWrap: true, maxLines: 3,),
                             )),
                           ),
                         );
