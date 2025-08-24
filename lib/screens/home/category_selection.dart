@@ -1,4 +1,5 @@
 import 'package:dailyquotes/services/quote_data_processing.dart';
+import 'package:dailyquotes/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,18 +13,14 @@ class CategorySelection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Future<void> changeCategory({required String category}) async {
-      await ref.read(categoryNotifierProvider.notifier).setCategory(category);
-    }
-
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return FutureBuilder(
         future: quoteDataProcessing(),
         builder: (context, snapshot) {
-          if (snapshot.hasError) {
+          if(snapshot.hasError){
             return const Center(child: Text("An error occurred"));
           }
-          if (snapshot.connectionState == ConnectionState.waiting) {
+          if(snapshot.connectionState == ConnectionState.waiting){
             return const Center(child: CircularProgressIndicator());
           }
 
@@ -34,71 +31,60 @@ class CategorySelection extends ConsumerWidget {
 
           return Column(
             children: [
-              const SizedBox(
-                height: 30,
+              const SizedBox(height: 30,),
+              Row(
+                children: [
+                  SizedBox(width: 20,),
+                  Text("Select a category", style: TextStyle(fontSize: 22, color: isDark? Colors.white : Colors.black),),
+                  Spacer(),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: const Icon(Icons.close),
+                  ),
+                  SizedBox(width: 10,),
+                ],
               ),
-              Text(
-                "Select a category",
-                style: TextStyle(
-                    fontSize: 22, color: isDark ? Colors.white : Colors.black),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
+              const SizedBox(height: 30,),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20.0, 10, 8, 0),
                   child: GridView.builder(
                       itemCount: categories.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(childAspectRatio: 2,
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 10.0,
-                        mainAxisSpacing: 10.0,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 10.0,
+                          mainAxisSpacing: 10.0,
                       ),
                       itemBuilder: (context, index) {
                         final category = categories[index];
-                        final isSelected = category == selectedCategory;
-                        
-                        final formatCategory = category
-                            .split("-")
-                            .map((splittedWord) =>
-                                "${splittedWord[0].toUpperCase()}${splittedWord.substring(1)}")
-                            .join(" ");
-                        
+                        final isSelected = category== selectedCategory;
                         return GestureDetector(
                           onTap: () async {
-                            changeCategory(category: category);
+                            await ref.read(categoryNotifierProvider.notifier).setCategory(category);
                             Navigator.pop(context);
                           },
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
-                              color: isSelected
-                                  ? Colors.lightBlueAccent
-                                  : isDark
-                                      ? Colors.white
-                                      : Colors.grey.shade200,
+                              color: isSelected? Colors.lightBlueAccent : isDark? darkTheme.colorScheme.surfaceContainerHighest: Colors.grey.shade200,
                             ),
-                            child: Center(
-                                child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 4.0),
-                              child: Text(
-                                formatCategory,
-                                style: fonts[ref.watch(fontNotifierProvider)].copyWith(fontSize: 18),
-                                textAlign: TextAlign.center,
-                                softWrap: true,
-                                maxLines: 2,overflow: TextOverflow.ellipsis,
-                              ),
+                            child: Center(child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                              child: Text(category.toUpperCase(), style: fonts[ref.watch(fontNotifierProvider)].copyWith(color: Theme.of(context).colorScheme.onSurface), textAlign: TextAlign.center, softWrap: true, maxLines: 3,),
                             )),
                           ),
                         );
-                      }),
+                      }
+                  ),
                 ),
               )
             ],
           );
-        });
+
+        }
+    );
   }
 }
+
