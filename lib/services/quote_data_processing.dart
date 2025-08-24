@@ -12,8 +12,7 @@ Future<List<Quote>> quoteDataProcessing() async {
     allTheQuotes.add(Quote.fromFileOfData(row));
   }
 
-  return allTheQuotes;
-
+  return allTheQuotes.where((e)=> e.quote.length < 250).toList();
 }
 
 List<String> _splitIndividualLines(String oneLine) {
