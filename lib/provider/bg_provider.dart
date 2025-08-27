@@ -9,17 +9,12 @@ part 'bg_provider.g.dart';
 @riverpod
 class BgNotifier extends _$BgNotifier {
   @override
-
   BoxDecoration build() {
     final colorIndex = Preferences.getColorIndex();
     final gradientIndex = Preferences.getGradientIndex();
     final imageUrl = Preferences.getImageUrl();
-    debugPrint('[BgNotifier] colorIndex = $colorIndex');
-    debugPrint('[BgNotifier] gradientIndex = $gradientIndex');
-    debugPrint('[BgNotifier] imageUrl = $imageUrl');
 
     if (colorIndex != null || gradientIndex != null || imageUrl != null) {
-      // there was no return keyword before boxdecoration so it was returning default -MG
       return BoxDecoration(
         color: colorIndex != null ? colors[colorIndex] : null,
         gradient: gradientIndex != null ? gradients[gradientIndex] : null,
@@ -39,7 +34,6 @@ class BgNotifier extends _$BgNotifier {
       Preferences.removeGradient(),
       Preferences.removeImageUrl(),
     ]);
-    debugPrint('[BgNotifier] saved colorIndex = ${Preferences.getColorIndex()}');
   }
 
   Future<void> updateGradient(int index) async {

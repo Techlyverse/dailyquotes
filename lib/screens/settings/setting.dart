@@ -12,76 +12,25 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  //List<String> _languages = [];
-  //String _selectedLanguage = Preferences.getLanguage();
-
-  @override
-  void initState() {
-    super.initState();
-    loadLanguages();
-  }
-
-  Future<void> loadLanguages() async {
-    //final langs = await getLanguages();
-    setState(() {
-      //_languages = langs;
-    });
-  }
-
-  // Future<List<String>> getLanguages() async {
-  //   try {
-  //     final DocumentSnapshot doc = await FirebaseFirestore.instance
-  //         .collection('app_info')
-  //         .doc('info')
-  //         .get();
-  //
-  //     if (doc.exists) {
-  //       final data = doc.data() as Map<String, dynamic>;
-  //       List<dynamic> languages = data['languages'];
-  //
-  //       return languages.map((lang) => lang.toString()).toList();
-  //     } else {
-  //       throw Exception("Document does not exist.");
-  //     }
-  //   } catch (e) {
-  //     //print("Error getting languages: $e");
-  //     return [];
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.arrow_back),
-            style: IconButton.styleFrom(
-              backgroundColor:
-                  isDark ? const Color(0xFF1E1E1E) : const Color(0xFFFFFDF9),
-              foregroundColor: isDark ? Colors.white : Colors.black,
-            ),
-          ),
-          title: const Text('Settings')),
+      appBar: AppBar(title: const Text('Settings')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 5),
+            const SizedBox(height: 10),
+            const Padding(
+              padding: EdgeInsets.only(left: 5),
               child: Text(
                 "General",
                 style: TextStyle(
-                    color: Colors.deepOrange.shade700,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22),
+                  color: Colors.deepOrange,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             const SizedBox(
@@ -101,7 +50,9 @@ class _SettingScreenState extends State<SettingScreen> {
                 leading: const Icon(Icons.share_outlined),
                 title: const Text('Share this app'),
                 onTap: () async {
-                  await Share.share(AppUrls.playStoreUrl);
+                  await SharePlus.instance.share(
+                    ShareParams(text: AppUrls.playStoreUrl),
+                  );
                 },
               ),
             ),
@@ -146,14 +97,14 @@ class _SettingScreenState extends State<SettingScreen> {
             //   ),
             // ),
             const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.only(left: 5),
+            const Padding(
+              padding: EdgeInsets.only(left: 5),
               child: Text(
                 "Follow Us",
                 style: TextStyle(
-                    color: Colors.deepOrange.shade700,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22),
+                  color: Colors.deepOrange,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             const SizedBox(

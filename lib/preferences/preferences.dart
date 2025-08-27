@@ -77,11 +77,11 @@ class Preferences {
     return _prefs.getInt(_fontIndex);
   }
 
-  static Future<bool> saveCategory(String category) async{
+  static Future<bool> saveCategory(String category) async {
     return await _prefs.setString(_selectedCategory, category);
   }
 
-  static String? getCategory(){
+  static String? getCategory() {
     return _prefs.getString(_selectedCategory);
   }
 }

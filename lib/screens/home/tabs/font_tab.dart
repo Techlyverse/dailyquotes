@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../theme/theme.dart';
 
-
 class FontTab extends StatelessWidget {
   const FontTab({super.key});
 
@@ -19,6 +18,7 @@ class FontTab extends StatelessWidget {
         crossAxisCount: 3,
         crossAxisSpacing: 10.0,
         mainAxisSpacing: 10.0,
+        childAspectRatio: 2.0,
       ),
       itemBuilder: (_, index) {
         return Consumer(builder: (context, ref, child) {
@@ -26,20 +26,24 @@ class FontTab extends StatelessWidget {
             onTap: () {
               ref.read(fontNotifierProvider.notifier).setFontIndex(index);
               Navigator.pop(context);
-
             },
             child: Container(
               padding: const EdgeInsets.all(10),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                color: isDark? darkTheme.colorScheme.surfaceContainerHighest: Colors.grey.shade200,
+                color: isDark
+                    ? darkTheme.colorScheme.surfaceContainerHighest
+                    : Colors.grey.shade200,
               ),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Text(
-                  fonts[index].fontFamily.toString(),
-                  style: fonts[index].copyWith(color: Theme.of(context).colorScheme.onSurface),
+                  fonts[index].fontFamily?.split("_").first ?? "New Font",
+                  style: fonts[index].copyWith(
+                    fontSize: 16,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                 ),
               ),
             ),

@@ -11,7 +11,6 @@ class BackgroundSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return DefaultTabController(
-      // length was 3 before which was throwing exception -MG
       length: 4,
       child: Column(
         children: [
@@ -20,7 +19,10 @@ class BackgroundSheet extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Background", style: TextStyle(fontSize: 20, color: isDark? Colors.white : Colors.black)),
+                Text("Background",
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: isDark ? Colors.white : Colors.black)),
                 IconButton(
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -31,6 +33,7 @@ class BackgroundSheet extends StatelessWidget {
             ),
           ),
           const TabBar(
+            dividerColor: Colors.transparent,
             tabs: [
               Tab(text: 'Images'),
               Tab(text: 'Gradients'),
@@ -48,6 +51,7 @@ class BackgroundSheet extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(height: 20),
         ],
       ),
     );

@@ -11,29 +11,11 @@ import '../settings/setting.dart';
 import 'background_sheet.dart';
 import 'category_selection.dart';
 
-class HomeScreen extends ConsumerStatefulWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  ConsumerState<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends ConsumerState<HomeScreen> {
-  List<String> categories = [];
-  List<String> languages = [];
-
-
-  @override
-  void initState() {
-    super.initState();
-    //getAppInfo();
-  }
-
-
-  @override
-  Widget build(BuildContext context) {
-    //final bg = ref.watch(bgNotifierProvider);
-    //final textColor = getTextColor(bg);
+  Widget build(BuildContext context, WidgetRef ref) {
     final selectedCategory = ref.watch(categoryNotifierProvider);
 
     return Container(
@@ -41,125 +23,102 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Padding(
-          padding:
-              const EdgeInsets.only(left: 20.0, top: 40, right: 20, bottom: 20),
-            child: Column(
-              children: [
-                const SizedBox(height: 8,),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      // IconButton(
-                      //     onPressed: (){
-                      //       showModalBottomSheet(
-                      //           context: context,
-                      //           builder: (context) => const CategorySelection(),
-                      //       );
-                      //     },
-                      //     icon: const Icon(Icons.label),
-                      //     tooltip: "Select Category",
-                      // ),
-                      // const SizedBox(width: 5,),
-                      GestureDetector(
-                        onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (context) => const CategorySelection(),
-                          );
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: Colors.white70,
-                              width: 2,
-                            ),
-                          ),
-                          child: Text(
-                            selectedCategory != null ? selectedCategory.toUpperCase() : "No Category Selected",
-                            style: fonts[ref.watch(fontNotifierProvider)],
-                          ),
+          padding: const EdgeInsets.only(
+            left: 20.0,
+            top: 40,
+            right: 20,
+            bottom: 20,
+          ),
+          child: Column(
+            children: [
+              const SizedBox(height: 8),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) => const CategorySelection(),
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.white70, width: 2),
+                        ),
+                        child: Text(
+                          selectedCategory ?? "No Category Selected",
+                          style: fonts[ref.watch(fontNotifierProvider)],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                    child: CategoryTab(category: selectedCategory,),),
-
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          showModalBottomSheet<void>(
-                            context: context,
-                            builder: (context) => const BackgroundSheet(),
-                          );
-                        },
-                        icon: const Icon(Icons.color_lens_outlined),
+              ),
+              Expanded(
+                child: CategoryTab(
+                  category: selectedCategory,
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        showModalBottomSheet<void>(
+                          context: context,
+                          builder: (context) => const BackgroundSheet(),
+                        );
+                      },
+                      style: IconButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.white,
                       ),
-                      const SizedBox(width: 15),
-                      IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SettingScreen()));
-                        },
-                        icon: const Icon(Icons.settings_outlined),
-                      )
-                    ],
-                  ),
+                      icon: const Icon(Icons.color_lens_outlined),
+                    ),
+                    const SizedBox(width: 15),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SettingScreen()));
+                      },
+                      style: IconButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.white,
+                      ),
+                      icon: const Icon(Icons.settings_outlined),
+                    )
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
+      ),
     );
-
   }
 
-  // Future<void> getLanguage()async {
-  //   final langList = await FirebaseFirestore.instance.collection('languages').get();
-  //   for(var lang in langList.docs){
-  //     languages.add(lang['language']);
-  //   }
-  // }
-
-  Color getTextColor(BoxDecoration bg){
+  Color getTextColor(BoxDecoration bg) {
     final bgColor = bg.color ?? Colors.transparent;
-    if(bg.gradient != null) {
+    if (bg.gradient != null) {
       final firstColor = bg.gradient!.colors.first;
-      return ThemeData.estimateBrightnessForColor(firstColor) == Brightness.dark ? Colors.white : Colors.black;
+      return ThemeData.estimateBrightnessForColor(firstColor) == Brightness.dark
+          ? Colors.white
+          : Colors.black;
     }
-    if(bg.image != null) return Colors.white;
-    return ThemeData.estimateBrightnessForColor(bgColor) == Brightness.dark ? Colors.white : Colors.black;
+    if (bg.image != null) return Colors.white;
+    return ThemeData.estimateBrightnessForColor(bgColor) == Brightness.dark
+        ? Colors.white
+        : Colors.black;
   }
-
-  // Future<void> getAppInfo() async {
-  //   try {
-  //     final DocumentSnapshot doc = await FirebaseFirestore.instance
-  //         .collection('app_info')
-  //         .doc('info')
-  //         .get();
-  //
-  //     if (doc.exists) {
-  //       final data = doc.data() as Map<String, dynamic>;
-  //       languages = List.from(data['languages']);
-  //       categories = List.from(data['categories']);
-  //     } else {
-  //       throw Exception("Document does not exist.");
-  //     }
-  //   } catch (e) {
-  //     //print("Error getting languages: $e");
-  //   }
-  // }
 }

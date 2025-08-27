@@ -24,7 +24,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^6.2.1
   share_plus: ^11.0.0
-  font_awesome_flutter: ^10.7.0
+ # font_awesome_flutter: ^10.7.0
   shared_preferences: ^2.2.2
   url_launcher: ^6.2.5
   flutter_riverpod: ^2.6.1
@@ -58,7 +58,6 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
-    - assets/quotes/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
