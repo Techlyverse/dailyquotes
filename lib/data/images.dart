@@ -26,4 +26,7 @@ final List<String> images = [
   "assets/images/25.jpg",
   "assets/images/26.jpg",
   "assets/images/27.jpg",
+  "assets/images/28.jpg",
+  "assets/images/29.jpg",
+  "assets/images/30.jpg",
 ];
